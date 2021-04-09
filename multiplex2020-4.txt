@@ -1,3 +1,6 @@
+<Total-Salas>
+1
+<Total-Salas/>
 <Sala>
 <ID>
 0

@@ -33,12 +33,14 @@ struct Pelicula {
 };
 
 struct SalaCine {
-    int ID;
+    short int id;
     bool estado;
     char* nombre;
     int cupoTotalSillas;
     Pelicula* pelicula;
     Silla* silla;
+    short int sillasTotalPreferencial;
+    short int sillasTotalGenerales;
 };
 
 struct Cliente{
@@ -137,98 +139,127 @@ void cargarConfiguracionMultiplex(SalaCine* cine){
     if(!leer.is_open()){ std::cout << "Error: File Open" << '\n';}
 
     
-    
+
     while(!leer.eof()){
 
-        leer.getline(auxiliar, 30, '\n');
+        leer.getline(auxiliar, 30, '\n');//<Total-Salas>
+        leer.getline(auxiliar, 30, '\n');// 1
         cine = new SalaCine[atoi(auxiliar)];
-        cout<<auxiliar<<endl;
-        leer.getline(auxiliar, 30, '\n');
+        leer.getline(auxiliar, 30, '\n');//<Total-Salas/>
 
+        leer.getline(auxiliar, 30, '\n');//<Sala>
         while ((strcmp(auxiliar, "<Sala/>")) != 0){
 
             leer.getline(auxiliar, 30, '\n');
             cout<<auxiliar<<endl;
 
             if((strcmp(auxiliar, "<ID>")) == 0){
-                leer.getline(auxiliar, 30, '\n');
-                
-                
+                leer.getline(auxiliar, 30, '\n');// Numero Id
+                cine[1].id = atoi(auxiliar);
             }
+
+            leer.getline(auxiliar, 30, '\n');//<ID/>
+            leer.getline(auxiliar, 30, '\n');//<Nombre/>
             if((strcmp(auxiliar, "<Nombre>")) == 0){
                 leer.getline(auxiliar, 30, '\n');
                 cine[1].nombre = new char[30];
                 strcpy(cine[1].nombre, auxiliar);
             }
+
+            leer.getline(auxiliar, 30, '\n');//<Nombre/>
+            leer.getline(auxiliar, 30, '\n');//Cupo
             if((strcmp(auxiliar, "<Cupo>")) == 0){
                 leer.getline(auxiliar, 30, '\n');
+                cine[1].cupoTotalSillas = atoi(auxiliar);
             }
 
+            leer.getline(auxiliar, 30, '\n');//<Cupo/>
+            leer.getline(auxiliar, 30, '\n');//<Pelicula/>
             if((strcmp(auxiliar, "<Pelicula>")) == 0){
-                leer.getline(auxiliar, 30, '\n');
-                cout<<"Prueba2"<<auxiliar<<endl;
+
+                leer.getline(auxiliar, 30, '\n');//<Nombre/>
                 
                 if((strcmp(auxiliar, "<Nombre>")) == 0){
                     leer.getline(auxiliar, 30, '\n');//Nombre Pelicula
-                    leer.getline(auxiliar, 30, '\n');//<Nombre/>
-                    cout<<"Prueba1 "<<auxiliar<<endl;
+                    cine[1].pelicula[1].nombre = new char[30];
+                    strcpy(cine[1].pelicula[1].nombre, auxiliar);
+
                 }
 
+                leer.getline(auxiliar, 30, '\n');//<Nombre/>
                 leer.getline(auxiliar, 30, '\n');//<ID>
                 if((strcmp(auxiliar, "<ID>")) == 0){
                     leer.getline(auxiliar, 30, '\n');//ID Pelicula
-                    leer.getline(auxiliar, 30, '\n');//<ID/>
-                } else{cout<<"Id "<<auxiliar<<endl;}  
-                
+                    cine[1].pelicula[1].codigo= atoi(auxiliar);
+                    
+                }
+
+                leer.getline(auxiliar, 30, '\n');//<ID/>
                 leer.getline(auxiliar, 30, '\n');//<Fecha>
                 if((strcmp(auxiliar, "<Fecha>")) == 0){
                     leer.getline(auxiliar, 30, '\n');//Fecha Pelicula
-                    leer.getline(auxiliar, 30, '\n');//<Fecha/>
+
+                    
                 }
-              
+
+                leer.getline(auxiliar, 30, '\n');//<Fecha/>
                 leer.getline(auxiliar, 30, '\n');//<Hora>
                 if((strcmp(auxiliar, "<Hora>")) == 0){
                     leer.getline(auxiliar, 30, '\n');//Hora Pelicula
-                    leer.getline(auxiliar, 30, '\n');//<Hora/>
+
+                    
+                }
+                leer.getline(auxiliar, 30, '\n');//<Hora/>
+                leer.getline(auxiliar, 30, '\n');//<Pelicula/>
+            }
+
+            leer.getline(auxiliar, 30, '\n');//<Silla>
+            if((strcmp(auxiliar, "<Sillas>")) == 0){
+
+                leer.getline(auxiliar, 30, '\n');//<Preferencial>
+
+                if((strcmp(auxiliar, "<Preferencial>")) == 0){
+                    leer.getline(auxiliar, 30, '\n');//<Disponibles>
+
+                    if((strcmp(auxiliar, "<Disponibles>")) == 0){
+                        leer.getline(auxiliar, 30, '\n');//Sillas preferenciales disponibles
+                        
+                        cine[1].sillasTotalPreferencial = atoi(auxiliar);
+                        cine[1].silla[atoi(auxiliar)].identificacion = new char[30];
+                        for(int i = 0; i <= atoi(auxiliar); i++ ){
+                            strcpy(cine[1].silla[i].identificacion, "Preferencial");
+                            cine[1].silla[i].estado = true;
+                            cine[1].silla[i].reservada= false;
+                            
+                        }
+
+                    }
+
+                    leer.getline(auxiliar, 30, '\n');//<Disponibles/>
+                    leer.getline(auxiliar, 30, '\n');//<Reservadas>
+                    if((strcmp(auxiliar, "<Reservadas>")) == 0){
+                        leer.getline(auxiliar, 30, '\n');//Sillas preferenciales reservadas
+                        leer.getline(auxiliar, 30, '\n');//<Reservadas/>
+                    }
+                }
+
+                if((strcmp(auxiliar, "<General>")) == 0){
+                      leer.getline(auxiliar, 30, '\n');
+
+                      if((strcmp(auxiliar, "<Disponibles>")) == 0){
+                        leer.getline(auxiliar, 30, '\n');//Sillas generales disponibles
+                        leer.getline(auxiliar, 30, '\n');//<Disponibles/>
+                      }
+          
+                      leer.getline(auxiliar, 30, '\n');//<Reservadas>
+                      if((strcmp(auxiliar, "<Reservadas>")) == 0){
+                          leer.getline(auxiliar, 30, '\n');//Sillas generales reservadas
+                          leer.getline(auxiliar, 30, '\n');//<Reservadas/>
+                      }
                 }
             }
-
-            if((strcmp(auxiliar, "<Sillas>")) == 0){
-                leer.getline(auxiliar, 30, '\n');
-            }
-
-            if((strcmp(auxiliar, "<Preferencial>")) == 0){
-                leer.getline(auxiliar, 30, '\n');
-            }
-
-            if((strcmp(auxiliar, "<Disponibles>")) == 0){
-                leer.getline(auxiliar, 30, '\n');//Sillas preferenciales disponibles
-                leer.getline(auxiliar, 30, '\n');//<Disponibles/>
-            }
-          
-            leer.getline(auxiliar, 30, '\n');//<Reservadas>
-            if((strcmp(auxiliar, "<Reservadas>")) == 0){
-                leer.getline(auxiliar, 30, '\n');//Sillas preferenciales reservadas
-                leer.getline(auxiliar, 30, '\n');//<Reservadas/>
-            }
-
-            if((strcmp(auxiliar, "<General>")) == 0){
-                leer.getline(auxiliar, 30, '\n');
-            }
-
-            if((strcmp(auxiliar, "<Disponibles>")) == 0){
-                leer.getline(auxiliar, 30, '\n');//Sillas generales disponibles
-                leer.getline(auxiliar, 30, '\n');//<Disponibles/>
-            }
-          
-            leer.getline(auxiliar, 30, '\n');//<Reservadas>
-            if((strcmp(auxiliar, "<Reservadas>")) == 0){
-                leer.getline(auxiliar, 30, '\n');//Sillas generales reservadas
-                leer.getline(auxiliar, 30, '\n');//<Reservadas/>
-            }
-            
-        }
-
+      }
+    
         leer.getline(auxiliar, 30, '\n');
         if((strcmp(auxiliar, "<Sala>")) == 0){
                 //cargarConfiguracionMultiplex();
