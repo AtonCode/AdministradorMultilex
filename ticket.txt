@@ -1,0 +1,21 @@
+       Tiquet Multiplex 
+Fecha: Fri Apr  9 10:54:48 2021
+
+Cliente: Nombre Apellido
+Nombre Sala: Sala
+Nombre Pelicula: Nombre Pelicula
+Hora: Horario
+Numero de Silla: Numero Silla 
+Categoria Silla: TipoS Sillas
+Total a Pagar: $PrecioTotal
+ 
+       Tiquet Multiplex 
+Fecha: Fri Apr  9 10:57:16 2021
+
+Cliente: Nombre Apellido
+Nombre Sala: Sala
+Nombre Pelicula: Nombre Pelicula
+Hora: Horario
+Numero de Silla: Numero Silla 
+Categoria Silla: TipoS Sillas
+Total a Pagar: $PrecioTotal

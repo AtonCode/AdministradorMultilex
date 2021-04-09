@@ -7,10 +7,12 @@ Fecha de Entrega 12/04/21 6:59
 
 #include <iostream>
 #include <fstream>
-#include <string.h>
+#include <stdio.h>
+#include <time.h> 
 #include <ctime>
 #include <iomanip>
 #include <sstream>
+
 
 using namespace std;
 
@@ -23,7 +25,6 @@ struct Silla {
 
 struct Calendario {
   tm fecha;
-  tm hora;
 };
 
 struct Pelicula {
@@ -192,7 +193,13 @@ void cargarConfiguracionMultiplex(SalaCine* cine){
                 leer.getline(auxiliar, 30, '\n');//<ID/>
                 leer.getline(auxiliar, 30, '\n');//<Fecha>
                 if((strcmp(auxiliar, "<Fecha>")) == 0){
-                    leer.getline(auxiliar, 30, '\n');//Fecha Pelicula
+
+                    leer.getline(auxiliar, 30, '/');//Dia Pelicula
+                    cine[1].pelicula[1].calendario[1].fecha.tm_mday= atoi(auxiliar);
+                    leer.getline(auxiliar, 30, '/');//Mes Pelicula
+                    cine[1].pelicula[1].calendario[1].fecha.tm_mon= atoi(auxiliar);
+                    leer.getline(auxiliar, 30, '\n');//Año Pelicula
+                    cine[1].pelicula[1].calendario[1].fecha.tm_year= atoi(auxiliar);
 
                     
                 }
@@ -200,8 +207,11 @@ void cargarConfiguracionMultiplex(SalaCine* cine){
                 leer.getline(auxiliar, 30, '\n');//<Fecha/>
                 leer.getline(auxiliar, 30, '\n');//<Hora>
                 if((strcmp(auxiliar, "<Hora>")) == 0){
-                    leer.getline(auxiliar, 30, '\n');//Hora Pelicula
 
+                    leer.getline(auxiliar, 30, ':');//Hora Pelicula
+                    cine[1].pelicula[1].calendario[1].fecha.tm_hour= atoi(auxiliar);
+                    leer.getline(auxiliar, 30, '\n');//Minuto Pelicula
+                    cine[1].pelicula[1].calendario[1].fecha.tm_min= atoi(auxiliar);
                     
                 }
                 leer.getline(auxiliar, 30, '\n');//<Hora/>
@@ -276,15 +286,16 @@ void printTiquet(string nombre, string apellido, string nombreSala ,string nombr
           cout<< "No se puede abrir el archivo" << endl;
         }
 
-        time_t tiempo = time(NULL);//variables donde guardo el valor de la funcion time. 
-        struct tm *tlocal = localtime(&tiempo); //estructura donde obtengo el tiempo 
-        char output[10]; //array donde guardo la fecha
-        strftime(output,10,"%d/%m/%y",tlocal); //formato para guardar la fecha obtenido en *tlocal como dd/mm/yyyy
-        //https://es.stackoverflow.com/questions/62201/obtener-fecha-del-sistema
-
+        time_t rawtime;
+        struct tm * timeinfo;
+        time (&rawtime);
+        timeinfo = localtime (&rawtime);
+        //https://www.cplusplus.com/reference/ctime/localtime/
+        
         writing
+        <<" "<<endl
         <<"       Tiquet Multiplex "<<endl
-        <<"Fecha: "<<output<<endl
+        <<"Fecha: "<<asctime(timeinfo)<<endl
         <<"Cliente: "<<nombre<<" "<<apellido<<endl
         <<"Nombre Sala: "<<nombreSala<<endl
         <<"Nombre Pelicula: "<< nombrePelicula <<endl
@@ -413,6 +424,7 @@ void ventaTiquete(Cliente* cliente){
 int main(){
     system("clear");
     SalaCine* cine;
+    printTiquet("Nombre","Apellido","Sala","Nombre Pelicula","Horario", "TipoS Sillas","Numero Silla ","PrecioTotal");
     cargarConfiguracionMultiplex(cine);
 
     
