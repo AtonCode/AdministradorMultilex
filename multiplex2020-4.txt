@@ -32,7 +32,7 @@ Programador C++
 <Reservadas/>
 <Preferencial/>
 <General>
-<Disponibeles>
+<Disponibles>
 10
 <Disponibeles/>
 <Reservadas>
