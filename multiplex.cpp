@@ -176,14 +176,20 @@ void cargarConfiguracionMultiplex(SalaCine* cine){
 
                 leer.getline(auxiliar, 30, '\n');//<ID>
                 if((strcmp(auxiliar, "<ID>")) == 0){
-                    leer.getline(auxiliar, 30, '\n');
+                    leer.getline(auxiliar, 30, '\n');//ID Pelicula
+                    leer.getline(auxiliar, 30, '\n');//<ID/>
                 } else{cout<<"Id "<<auxiliar<<endl;}  
                 
+                leer.getline(auxiliar, 30, '\n');//<Fecha>
                 if((strcmp(auxiliar, "<Fecha>")) == 0){
-                    leer.getline(auxiliar, 30, '\n');
+                    leer.getline(auxiliar, 30, '\n');//Fecha Pelicula
+                    leer.getline(auxiliar, 30, '\n');//<Fecha/>
                 }
+              
+                leer.getline(auxiliar, 30, '\n');//<Hora>
                 if((strcmp(auxiliar, "<Hora>")) == 0){
-                leer.getline(auxiliar, 30, '\n');
+                    leer.getline(auxiliar, 30, '\n');//Hora Pelicula
+                    leer.getline(auxiliar, 30, '\n');//<Hora/>
                 }
             }
 
@@ -196,11 +202,14 @@ void cargarConfiguracionMultiplex(SalaCine* cine){
             }
 
             if((strcmp(auxiliar, "<Disponibles>")) == 0){
-                leer.getline(auxiliar, 30, '\n');
+                leer.getline(auxiliar, 30, '\n');//Sillas preferenciales disponibles
+                leer.getline(auxiliar, 30, '\n');//<Disponibles/>
             }
-
+          
+            leer.getline(auxiliar, 30, '\n');//<Reservadas>
             if((strcmp(auxiliar, "<Reservandas>")) == 0){
-                leer.getline(auxiliar, 30, '\n');
+                leer.getline(auxiliar, 30, '\n');//Sillas preferenciales reservadas
+                leer.getline(auxiliar, 30, '\n');//<Reservadas/>
             }
 
             if((strcmp(auxiliar, "<General>")) == 0){
@@ -208,11 +217,14 @@ void cargarConfiguracionMultiplex(SalaCine* cine){
             }
 
             if((strcmp(auxiliar, "<Disponibles>")) == 0){
-                leer.getline(auxiliar, 30, '\n');
+                leer.getline(auxiliar, 30, '\n');//Sillas generales disponibles
+                leer.getline(auxiliar, 30, '\n');//<Disponibles/>
             }
-
+          
+            leer.getline(auxiliar, 30, '\n');//<Reservadas>
             if((strcmp(auxiliar, "<Reservandas>")) == 0){
-                leer.getline(auxiliar, 30, '\n');
+                leer.getline(auxiliar, 30, '\n');//Sillas generales reservadas
+                leer.getline(auxiliar, 30, '\n');//<Reservadas/>
             }
             
         }
