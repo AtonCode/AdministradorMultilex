@@ -137,14 +137,14 @@ void cargarConfiguracionMultiplex(SalaCine* cine){
     if(!leer.is_open()){ std::cout << "Error: File Open" << '\n';}
 
     
-
+    
     while(!leer.eof()){
 
         leer.getline(auxiliar, 30, '\n');
         cine = new SalaCine[atoi(auxiliar)];
         cout<<auxiliar<<endl;
         leer.getline(auxiliar, 30, '\n');
-        
+
         while ((strcmp(auxiliar, "<Sala/>")) != 0){
 
             leer.getline(auxiliar, 30, '\n');
