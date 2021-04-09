@@ -334,15 +334,73 @@ Silla* Crear_Sillas(int sillas_general, int sillas_preferencial) {
 }
 
 //Adicion de Salas
-SalaCine* crear_Sala(int i, int sillas_general, int sillas_preferencial){
+SalaCine* crear_Sala(int i, short int id, char* nombre, int cupoTotalSillas, char* nombrePelicula, int codigo, Calendario* calendario, tm hora, int sillas_general, int sillas_preferencial){
+
+  fstream writing2;
+  string linea;
+  writing2.open("multiplex2020-4.txt",ios::app);
+
+  if(writing2.fail()){
+    cout<< "No se puede abrir el archivo" << endl;
+  }
 
   SalaCine* sala = new SalaCine[i];
 
   if(sala[i].estado==false){
 
     sala[i].estado = true;
-    
-    //sala[i].Horarios =
+
+    writing2
+    <<"<Sala>"<<endl
+    <<"<ID>"<<endl
+    //ID
+    <<"<Nombre>"<<endl
+    //Nombre Sala
+    <<"<Nombre/>"<<endl
+    <<"<Cupo>"<<endl
+    //Cupo
+    <<"<Cupo/>"<<endl
+    <<"<Pelicula>"<<endl
+    <<"<Nombre>"<<endl
+    //Nombre pelicula
+    <<"<Nombre/>"<<endl
+    <<"<ID>"<<endl
+    //ID pelicula
+    <<"<ID/>"<<endl
+    <<"<Fecha>"<<endl
+    //Fecha
+    <<"<Fecha/>"<<endl
+    <<"<Hora>"<<endl
+    //Hora
+    <<"<Hora/>"<<endl
+    <<"<Pelicula/>"<<endl
+
+    //Sillas
+    <<"<Sillas>"<<endl
+    <<"<Preferencial>"<<endl
+    <<"<Disponibles>"<<endl
+    //Sillas preferenciales disponibles
+    <<"<Disponibles/>"<<endl
+    <<"<Reservadas>"<<endl
+    //Sillas preferenciales Reservadas
+    <<"<Reservadas/>"<<endl
+    <<"<Preferencial/>"<<endl
+    <<"<General>"<<endl
+    <<"<Disponibles>"<<endl
+    //Sillas Generales Disponibles
+    <<"<Disponibles/>"<<endl
+    <<"<Reservadas>"<<endl
+    //Sillas Generales Reservadas
+    <<"<Reservadas/>"<<endl
+    <<"<General/>"<<endl
+    <<"<Sillas/>"<<endl;
+
+    while (!writing2.eof()) {
+            getline(writing2,linea);
+            cout<<linea<<endl;
+        }
+
+    writing2.close();
 
   }else{std::cout<<"Esta sala Existe"<<endl;}
 
