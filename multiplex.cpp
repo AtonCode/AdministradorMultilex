@@ -138,15 +138,10 @@ void cargarConfiguracionMultiplex(SalaCine* cine){
     short int contadorSalas = 0;
     if(!leer.is_open()){ std::cout << "Error: File Open" << '\n';}
 
-    
-
     while(!leer.eof()){
 
-        leer.getline(auxiliar, 30, '\n');//<Total-Salas>
-        leer.getline(auxiliar, 30, '\n');// 1
-        cine = new SalaCine[atoi(auxiliar)];
-        leer.getline(auxiliar, 30, '\n');//<Total-Salas/>
-
+        cine = new SalaCine[1];
+      
         leer.getline(auxiliar, 30, '\n');//<Sala>
         while ((strcmp(auxiliar, "<Sala/>")) != 0){
 
