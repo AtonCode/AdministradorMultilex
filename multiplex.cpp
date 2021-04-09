@@ -307,19 +307,6 @@ void printTiquet(string nombre, string apellido, string nombreSala ,string nombr
 }
 
 
-int leerNumeroSalas(char* archivo) {
-
-  ifstream leer (archivo, ios::in);
-  char* auxiliar = new char[5];
-
-  int numero_salas;
-  leer.getline(auxiliar, 5, '\n');
-  numero_salas = atoi(auxiliar);
-
-  return numero_salas;
-}
-
-
 Silla* Crear_Sillas(int sillas_general, int sillas_preferencial) {
 
   int sillas_totales = sillas_general + sillas_preferencial;
