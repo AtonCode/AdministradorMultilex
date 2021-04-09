@@ -1,0 +1,50 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background: #069;
+}
+
+h1{
+    color:white;
+    font-size: 4em;
+    text-align: center;
+}
+
+table{
+    border-radius: 20px;
+    border:4px solid darkblue;
+    width: 80%;
+    margin: auto;
+    
+}
+
+th, td{
+    padding: 15px;
+}
+
+div#General{
+    margin: auto;
+    width: 90%;
+    height: 2000px;
+}
+
+div#Titulo{
+    margin-top: 100px;
+    width: 100%;
+    height: 150px;  
+}
+
+div#BannerIzquierdo{
+    float: left;
+    width: 5%;
+    height: 1850px;
+}
+
+div#BannerDerecho{
+    float: right;
+    width: 5%;
+    height: 1850px;
+}
