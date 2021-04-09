@@ -207,7 +207,7 @@ void cargarConfiguracionMultiplex(SalaCine* cine){
             }
           
             leer.getline(auxiliar, 30, '\n');//<Reservadas>
-            if((strcmp(auxiliar, "<Reservandas>")) == 0){
+            if((strcmp(auxiliar, "<Reservadas>")) == 0){
                 leer.getline(auxiliar, 30, '\n');//Sillas preferenciales reservadas
                 leer.getline(auxiliar, 30, '\n');//<Reservadas/>
             }
@@ -222,7 +222,7 @@ void cargarConfiguracionMultiplex(SalaCine* cine){
             }
           
             leer.getline(auxiliar, 30, '\n');//<Reservadas>
-            if((strcmp(auxiliar, "<Reservandas>")) == 0){
+            if((strcmp(auxiliar, "<Reservadas>")) == 0){
                 leer.getline(auxiliar, 30, '\n');//Sillas generales reservadas
                 leer.getline(auxiliar, 30, '\n');//<Reservadas/>
             }
