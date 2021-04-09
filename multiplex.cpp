@@ -364,7 +364,7 @@ SalaCine* crear_Sala(int i, short int id, char* nombre, int cupoTotalSillas, cha
     writing2
     <<"<Sala>"<<endl
     <<"<ID>"<<endl
-    //ID
+    <<id<<endl
     <<"<Nombre>"<<endl
     //Nombre Sala
     <<"<Nombre/>"<<endl
