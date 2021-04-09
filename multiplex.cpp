@@ -479,11 +479,49 @@ void ventaTiquete(Cliente* cliente){
 
 }
 
+void cartelera(){
+
+  fstream writing;
+  string linea;
+  writing.open("cartelera.html",ios::app);
+
+  if(writing.fail()){
+    cout<< "No se puede abrir el archivo" << endl;
+  }
+
+    writing
+
+    <<"<!DOCTYPE html>"<<endl
+    <<"<html lang='es'>"<<endl
+    <<" "<<endl
+    <<"<head>"<<endl
+    <<"<meta charset='UTF-8'>"<<endl
+    <<"<meta http-equiv='X-UA-Compatible' content='IE=edge'>"<<endl
+    <<"<meta name='viewport' content='width=device-width, initial-scale=1.0'>"<<endl
+    <<"<title>CARTELERA</title>"<<endl
+    <<"<link rel='stylesheet' href='EstiloCartelera.css'>"<<endl
+    <<"</head>"<<endl
+    <<" "<<endl
+    <<"<body>"<<endl
+    <<"<h1>hello</h1>"<<endl
+    <<"</body>"<<endl
+    <<"</html>"<<endl;
+
+  
+    while (!writing.eof()) {
+            getline(writing,linea);
+            cout<<linea<<endl;
+        }
+
+    writing.close();
+}
+
 int main(){
     system("clear");
-    SalaCine* cine;
-    printTiquet("Nombre","Apellido","Sala","Nombre Pelicula","Horario", "TipoS Sillas","Numero Silla ","PrecioTotal");
-    cargarConfiguracionMultiplex(cine);
+    //SalaCine* cine;
+    //printTiquet("Nombre","Apellido","Sala","Nombre Pelicula","Horario", "TipoS Sillas","Numero Silla ","PrecioTotal");
+    //cargarConfiguracionMultiplex(cine);
+    cartelera();
 
     
   return 0;
