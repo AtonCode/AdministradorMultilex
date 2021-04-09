@@ -1,0 +1,1 @@
+leer.getline(auxiliar, 30, '\n');//<Hora/>
