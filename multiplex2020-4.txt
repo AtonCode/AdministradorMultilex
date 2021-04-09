@@ -24,9 +24,9 @@ Programador C++
 <Pelicula/>
 <Sillas>
 <Preferencial>
-<Disponibeles>
+<Disponibles>
 10
-<Disponibeles/>
+<Disponibles/>
 <Reservadas>
 0
 <Reservadas/>
