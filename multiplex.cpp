@@ -558,11 +558,11 @@ void cartelera(){
 
 
 int main(){
-  
+
     system("clear");
     SalaCine* cine;
 
-    cargarConfiguracionMultiplex(cine);
+    //cargarConfiguracionMultiplex(cine);
     //cartelera();
 
   short int opcionActores = menuInicial();
