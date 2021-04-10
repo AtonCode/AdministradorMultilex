@@ -558,12 +558,27 @@ void cartelera(){
 
 
 int main(){
+  
     system("clear");
-    //SalaCine* cine;
-    //printTiquet("Nombre","Apellido","Sala","Nombre Pelicula","Horario", "TipoS Sillas","Numero Silla ","PrecioTotal");
-    //cargarConfiguracionMultiplex(cine);
-    cartelera();
+    SalaCine* cine;
 
+    cargarConfiguracionMultiplex(cine);
+    //cartelera();
+
+  short int opcionActores = menuInicial();
+  if(opcionActores == 1){
+    short int opcionAdmin = menuAdministrador();
+  }
+  if(opcionActores == 2){
+    short int opcionCliente = menuCliente();
+  }
+  if(opcionActores == 3){
+    short int opcionTaquilla = menuTaquilla();
+  }
+  if(opcionActores == 4){
+    system("clear");
+  }
+  system("clear");
     
   return 0;
 }
