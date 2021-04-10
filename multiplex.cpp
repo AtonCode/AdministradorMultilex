@@ -46,6 +46,7 @@ struct Actor{
   char* nombre;
   char* apellido;
   SalaCine* sala;
+  int numSalas;
 };
 
 //FUNCIONES
@@ -292,7 +293,7 @@ SalaCine* crear_Sala(int i, short int id, char* nombre, int cupoTotalSillas, cha
     <<"<ID>"<<endl
     <<id<<endl
     <<"<Nombre>"<<endl
-    //Nombre Sala
+    <<nombre<<endl
     <<"<Nombre/>"<<endl
     <<"<Cupo>"<<endl
     //Cupo
@@ -409,11 +410,13 @@ void eliminarContenidoHTML(){
   //http://www.cplusplus.com/reference/fstream/ofstream/open/
 }
 
-void cartelera(Actor*){
+void cartelera(Actor* cine){
   eliminarContenidoHTML();
+  cine = new Actor[1];
 
   fstream writing;
-  string linea,namep="BobEsponja";//jmmm
+  string linea;
+
   writing.open("cartelera.html",ios::app);
 
   if(writing.fail()){
@@ -481,18 +484,21 @@ void cartelera(Actor*){
             writing.close();
 
             //Este for sirve para agregar una tabla del tamaño de las salas disponibles
-            for(int i= 0; i < 3 ; i++){//Hay que añadir la cantidad de salas
-
               //Se abre el archivo Cartelera
-              writing.open("cartelera.html",ios::app);
+            writing.open("cartelera.html",ios::app);
 
+            char* nombrePelicula = new char[30];
+            for(int i= 0; i < cine[0].numSalas ; i++){//Hay que añadir la cantidad de salas
               //Se escribe en cartelera.html el siguiente codigo para imprimir la tabla
+
+              strcpy(cine[0].sala[i].pelicula[i].nombre, nombrePelicula);
+              
               writing
 
               <<"<tr>"<<endl
-                <<"<td>Sala "<</*  */<<"</td>"<<endl //añadir funcion de sala 
-                <<"<td>"<</*  */<<"</td>"<<endl //añadir funcion de nombre
-                <<"<td>"<</*  */<<"</td>"<<endl; //añadir funcion de horario
+                <<"<td>Sala "<<cine[0].sala[i].id<<"</td>"<<endl //añadir funcion de sala 
+                <<"<td>"<<nombrePelicula<<"</td>"<<endl //añadir funcion de nombre
+                <<"<td>"<<cine[0].sala[i].pelicula[i].fecha.tm_yday<<"</td>"<<endl; //añadir funcion de horario
 
                 while (!writing.eof()) {
                   getline(writing,linea);
@@ -504,43 +510,43 @@ void cartelera(Actor*){
 
 
                 //Con estos if compararemos el nombre de la pelicula en la sala con las 7 disponibles por la imagen
-                if(namep == "BobEsponja"){
+                if(nombrePelicula == "BobEsponja"){
                   writing.open("cartelera.html",ios::app);
                   writing
                   <<"<td><img id='ImagenCentrada' src='Imagenes/BobEsponja.jpg' style='width:140px;height:240px;'></td>"<<endl;
                   writing.close();
                 }
-                else if (namep == "EndGame"){
+                else if (nombrePelicula == "EndGame"){
                   writing.open("cartelera.html",ios::app);
                   writing
                   <<"<td><img id='ImagenCentrada' src='Imagenes/EndGame.jpg' style='width:140px;height:240px;'></td>"<<endl;
                   writing.close();
                 }
-                else if(namep == "GrandesHeroes"){
+                else if(nombrePelicula == "GrandesHeroes"){
                   writing.open("cartelera.html",ios::app);
                   writing
                   <<"<td><img id='ImagenCentrada' src='Imagenes/GrandesHeroes.jpg' style='width:140px;height:240px;'></td>"<<endl;
                   writing.close();
                 }
-                else if(namep == "MyHeroAcademia"){
+                else if(nombrePelicula == "MyHeroAcademia"){
                   writing.open("cartelera.html",ios::app);
                   writing
                   <<"<td><img id='ImagenCentrada' src='Imagenes/MyHeroAcademia.jpg' style='width:140px;height:240px;'></td>"<<endl;
                   writing.close();
                 }
-                else if(namep == "RapidosYFuriosos7"){
+                else if(nombrePelicula == "RapidosYFuriosos7"){
                   writing.open("cartelera.html",ios::app);
                   writing
                   <<"<td><img id='ImagenCentrada' src='Imagenes/RapidosYFuriosos7.jpg' style='width:140px;height:240px;'></td>"<<endl;
                   writing.close();
                 }
-                else if(namep == "ReyLeon"){
+                else if(nombrePelicula == "ReyLeon"){
                   writing.open("cartelera.html",ios::app);
                   writing
                   <<"<td><img id='ImagenCentrada' src='Imagenes/ReyLeon.jpg' style='width:140px;height:240px;'></td>"<<endl;
                   writing.close();
                 }
-                else if(namep == "YourName"){
+                else if(nombrePelicula == "YourName"){
                   writing.open("cartelera.html",ios::app);
                   writing
                   <<"<td><img id='ImagenCentrada' src='Imagenes/YourName.jpg' style='width:140px;height:240px;'></td>"<<endl;
@@ -579,12 +585,20 @@ void menuConsolaActores(){
   short int opcionActores = menuInicial();
   if(opcionActores == 1){
     short int opcionAdmin = menuAdministrador();
+    if(opcionAdmin==1){}
+    if(opcionAdmin==2){}
+    if(opcionAdmin==3){}
   }
   if(opcionActores == 2){
     short int opcionCliente = menuCliente();
+    if(opcionCliente==1){}
+    if(opcionCliente==2){}
   }
   if(opcionActores == 3){
     short int opcionTaquilla = menuTaquilla();
+    if(opcionTaquilla==1){}
+    if(opcionTaquilla==2){}
+    
   }
   if(opcionActores == 4){
     system("clear");
