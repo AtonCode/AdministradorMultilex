@@ -638,37 +638,37 @@ void cartelera(Actor* cine){
                 <<"<td><img id='ImagenCentrada' src='Imagenes/BobEsponja.jpg' style='width:140px;height:240px;'></td>"<<endl;
                 writing.close();
               }
-              else if (nombrePelicula == "EndGame"){
+              else if ((strcmp(nombrePelicula, "EndGame"))==0){
                 writing.open("cartelera.html",ios::app);
                 writing
                 <<"<td><img id='ImagenCentrada' src='Imagenes/EndGame.jpg' style='width:140px;height:240px;'></td>"<<endl;
                 writing.close();
               }
-              else if(nombrePelicula == "GrandesHeroes"){
+              else if((strcmp(nombrePelicula, "GrandesHeroes"))==0){
                 writing.open("cartelera.html",ios::app);
                 writing
                 <<"<td><img id='ImagenCentrada' src='Imagenes/GrandesHeroes.jpg' style='width:140px;height:240px;'></td>"<<endl;
                 writing.close();
               }
-              else if(nombrePelicula == "MyHeroAcademia"){
+              else if((strcmp(nombrePelicula, "MyHeroAcademia"))==0){
                 writing.open("cartelera.html",ios::app);
                 writing
                 <<"<td><img id='ImagenCentrada' src='Imagenes/MyHeroAcademia.jpg' style='width:140px;height:240px;'></td>"<<endl;
                 writing.close();
               }
-              else if(nombrePelicula == "RapidosYFuriosos7"){
+              else if((strcmp(nombrePelicula, "RapidosYFuriosos7"))==0){
                 writing.open("cartelera.html",ios::app);
                 writing
                 <<"<td><img id='ImagenCentrada' src='Imagenes/RapidosYFuriosos7.jpg' style='width:140px;height:240px;'></td>"<<endl;
                 writing.close();
               }
-              else if(nombrePelicula == "ReyLeon"){
+              else if((strcmp(nombrePelicula, "ReyLeon"))==0){
                 writing.open("cartelera.html",ios::app);
                 writing
                 <<"<td><img id='ImagenCentrada' src='Imagenes/ReyLeon.jpg' style='width:140px;height:240px;'></td>"<<endl;
                 writing.close();
               }
-              else if(nombrePelicula == "YourName"){
+              else if((strcmp(nombrePelicula, "YourName"))==0){
                 writing.open("cartelera.html",ios::app);
                 writing
                 <<"<td><img id='ImagenCentrada' src='Imagenes/YourName.jpg' style='width:140px;height:240px;'></td>"<<endl;
