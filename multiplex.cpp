@@ -421,7 +421,7 @@ void cartelera(){
   eliminarContenidoHTML();
 
   fstream writing;
-  string linea,namep="YourName";//jmmm
+  string linea,namep="BobEsponja";//jmmm
   writing.open("cartelera.html",ios::app);
 
   if(writing.fail()){
@@ -448,7 +448,7 @@ void cartelera(){
 
         <<"<div id='Titulo'>"<<endl
 
-          <<"<h1>Peliculas en nuestras salas</h1>"<<endl
+          <<"<h1>Peliculas en Nuestras Salas</h1>"<<endl
     
         <<"</div>"<<endl
     
@@ -605,8 +605,8 @@ int main(){
     system("clear");
     SalaCine* cine;
 
-    cine = cargarConfiguracionMultiplex(cine);
-    //cartelera();
+    //cine = cargarConfiguracionMultiplex(cine);
+    cartelera();
     //menuConsolaActores();
 
   return 0;

@@ -1,1 +1,0 @@
-C:/Users/LENOVO/Documents/GitHub/AdministradorMultilex/YourName.jpg
