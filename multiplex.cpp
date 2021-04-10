@@ -49,14 +49,15 @@ struct Actor{
   int numSalas;
 };
 
-//FUNCIONES
+//Menu de Navegacion
 void menuInicial(Actor* cine);
 void menuAdministrador(Actor* cine);
 void menuCliente(Actor* cine);
 void menuTaquilla(Actor* cine);
 
+// Requerimientos del Programa
 Actor* cargarConfiguracionMultiplex();
-void printTiquet(string nombre, string apellido, string nombreSala ,string nombrePelicula, string hora, string categoriaSillas,string numeroSilla, string totalDeuda);
+void printTiquet(char* nombre, char* apellido, char* nombreSala ,char* nombrePelicula, char* hora, char* categoriaSillas,char* numeroSilla, int totalDeuda);
 void ventaTiquete(Actor* cliente);
 void eliminarContenidoHTML();
 void cartelera(Actor* cine);
