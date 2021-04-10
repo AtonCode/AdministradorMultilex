@@ -57,12 +57,13 @@ void menuTaquilla(Actor* cine);
 
 Actor* cargarConfiguracionMultiplex();
 void printTiquet(string nombre, string apellido, string nombreSala ,string nombrePelicula, string hora, string categoriaSillas,string numeroSilla, string totalDeuda);
-Silla* Crear_Sillas(int sillas_general, int sillas_preferencial);
-SalaCine* crear_Sala(int i, short int id, char* nombre, int cupoTotalSillas, char* nombrePelicula, int codigo, tm fecha, int sillas_general, int sillas_preferencial);
-SalaCine* eliminar_Sala(int numeroSalaEliminar, SalaCine *sala);
 void ventaTiquete(Actor* cliente);
 void eliminarContenidoHTML();
 void cartelera(Actor* cine);
+Silla* Crear_Sillas(int sillas_general, int sillas_preferencial);
+SalaCine* crear_Sala(int i, short int id, char* nombre, int cupoTotalSillas, char* nombrePelicula, int codigo, tm fecha, int sillas_general, int sillas_preferencial);
+SalaCine* eliminar_Sala(int numeroSalaEliminar, SalaCine *sala);
+
 
 int main(){
 
@@ -80,6 +81,7 @@ int main(){
 //ActorDos
 //Menu con Acciones permitadas para las taquillas fisicas del Cine
 void menuTaquilla(Actor* cine){
+  system("clear");
   short int opcion = 0;
 
   cout<< "Menu Taquilla Fisica"<<endl;
@@ -97,6 +99,7 @@ void menuTaquilla(Actor* cine){
 //ActorUno
 //Menu con Acciones permitadas para los Clientes del Cine
 void menuCliente(Actor* cine){
+  system("clear");
   short int opcion = 0;
 
     cout<<" Estimado Cliente que desea?:"<<endl;
@@ -106,9 +109,9 @@ void menuCliente(Actor* cine){
     cout<<"3. Salir"<<endl;
     cin>>opcion;
     cout<<" "<< endl;
-    if(opcion == 1){cartelera(cine); menuCliente(cine);}
+    if(opcion == 1){cartelera(cine); system("clear");menuCliente(cine);}
     if(opcion == 2){}//Adquirir Tiquetes
-    if(opcion == 3){menuInicial(cine);}//Volver a menu Inicial
+    if(opcion == 3){system("clear");menuInicial(cine);}//Volver a menu Inicial
 
 
     system("clear");
@@ -117,6 +120,7 @@ void menuCliente(Actor* cine){
 //ActorTres
 //Menu con Acciones permitadas para el Administrador del Cine
 void menuAdministrador(Actor* cine){
+  system("clear");
   short int opcion = 0;
 
     cout <<"        Menu Administrador"<< endl;
@@ -146,7 +150,7 @@ void menuAdministrador(Actor* cine){
     if(opcion == 5){}//Adicion de una Pelicual
     if(opcion == 6){}//Eliminar Sala
     if(opcion == 7){}//Eliminar Silla
-    if(opcion == 8){menuInicial(cine);}//Volver a menu Inicial
+    if(opcion == 8){system("clear");menuInicial(cine);}//Volver a menu Inicial
 
     
     system("clear");
@@ -154,6 +158,7 @@ void menuAdministrador(Actor* cine){
 
 //Menu de Precentacion del Programa
 void menuInicial(Actor* cine){
+  system("clear");
     short int opcion=0;
 
     cout<<"Bienvenido a Cine Multiplex Global" << endl;
@@ -166,9 +171,9 @@ void menuInicial(Actor* cine){
     cout<<"Si no desea continuar presione 4"<<endl;
     cin>>opcion;
     cout<<" "<< endl;
-    if(opcion == 1){menuAdministrador(cine);}// Menu Administrador
-    if(opcion == 2){menuCliente(cine);}// Menu Cliente
-    if(opcion == 3){menuTaquilla(cine);}//Menu Taquilla
+    if(opcion == 1){system("clear");menuAdministrador(cine);}// Menu Administrador
+    if(opcion == 2){system("clear");menuCliente(cine);}// Menu Cliente
+    if(opcion == 3){system("clear");menuTaquilla(cine);}//Menu Taquilla
     if(opcion == 4){system("clear");}// Salir
     
     system("clear"); 
