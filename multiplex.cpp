@@ -1,8 +1,8 @@
 /*
 Licencia GNU v3
-Por: Alejandro Sacristan Leal
+Por: Alejandro Sacristan Leal & Juan Esteban Reyes Tausa
 Administrador de Sala de Cine Multiplex
-Fecha de Entrega 12/04/21 6:59
+Fecha de Entrega 12/04/21 6:59 AM
 **/
 
 #include <iostream>
@@ -31,6 +31,7 @@ struct Pelicula {
   char* nombre;
   int codigo;
   Calendario* calendario;
+  Silla* silla;
 };
 
 struct SalaCine {
@@ -39,7 +40,6 @@ struct SalaCine {
     char* nombre;
     int cupoTotalSillas;
     Pelicula* pelicula;
-    Silla* silla;
     short int sillasTotalPreferencial;
     short int sillasTotalGenerales;
 };
@@ -136,49 +136,50 @@ void cargarConfiguracionMultiplex(SalaCine* cine){
 
     ifstream leer("multiplex2020-4.txt", ios::in);
     char* auxiliar = new char[30];
-    short int contadorSalas = 0;
+    short int contadorSalas = 1;
+    short int contadorPeliculas = 0;
     if(!leer.is_open()){ std::cout << "Error: File Open" << '\n';}
 
     while(!leer.eof()){
 
-        cine = new SalaCine[1];
+        cine = new SalaCine[contadorSalas];
       
         leer.getline(auxiliar, 30, '\n');//<Sala>
         while ((strcmp(auxiliar, "<Sala/>")) != 0){
+            
 
             leer.getline(auxiliar, 30, '\n');
             cout<<auxiliar<<endl;
 
             if((strcmp(auxiliar, "<ID>")) == 0){
                 leer.getline(auxiliar, 30, '\n');// Numero Id
-                cine[1].id = atoi(auxiliar);
+                cine[contadorSalas].id = atoi(auxiliar);
             }
 
             leer.getline(auxiliar, 30, '\n');//<ID/>
             leer.getline(auxiliar, 30, '\n');//<Nombre/>
             if((strcmp(auxiliar, "<Nombre>")) == 0){
                 leer.getline(auxiliar, 30, '\n');
-                cine[1].nombre = new char[30];
-                strcpy(cine[1].nombre, auxiliar);
+                cine[contadorSalas].nombre = new char[30];
+                strcpy(cine[contadorSalas].nombre, auxiliar);
             }
 
             leer.getline(auxiliar, 30, '\n');//<Nombre/>
             leer.getline(auxiliar, 30, '\n');//Cupo
             if((strcmp(auxiliar, "<Cupo>")) == 0){
                 leer.getline(auxiliar, 30, '\n');
-                cine[1].cupoTotalSillas = atoi(auxiliar);
+                cine[contadorSalas].cupoTotalSillas = atoi(auxiliar);
             }
 
-            leer.getline(auxiliar, 30, '\n');//<Cupo/>
-            leer.getline(auxiliar, 30, '\n');//<Pelicula/>
-            if((strcmp(auxiliar, "<Pelicula>")) == 0){
-
+          leer.getline(auxiliar, 30, '\n');//<Cupo/>
+          leer.getline(auxiliar, 30, '\n');//<Pelicula>
+          while ((strcmp(auxiliar, "<Pelicula>")) == 0){
                 leer.getline(auxiliar, 30, '\n');//<Nombre/>
                 
                 if((strcmp(auxiliar, "<Nombre>")) == 0){
                     leer.getline(auxiliar, 30, '\n');//Nombre Pelicula
-                    cine[1].pelicula[1].nombre = new char[30];
-                    strcpy(cine[1].pelicula[1].nombre, auxiliar);
+                    cine[contadorSalas].pelicula[contadorPeliculas].nombre = new char[30];
+                    strcpy(cine[contadorSalas].pelicula[contadorPeliculas].nombre, auxiliar);
 
                 }
 
@@ -186,7 +187,7 @@ void cargarConfiguracionMultiplex(SalaCine* cine){
                 leer.getline(auxiliar, 30, '\n');//<ID>
                 if((strcmp(auxiliar, "<ID>")) == 0){
                     leer.getline(auxiliar, 30, '\n');//ID Pelicula
-                    cine[1].pelicula[1].codigo= atoi(auxiliar);
+                    cine[contadorSalas].pelicula[contadorPeliculas].codigo= atoi(auxiliar);
                     
                 }
 
@@ -195,11 +196,11 @@ void cargarConfiguracionMultiplex(SalaCine* cine){
                 if((strcmp(auxiliar, "<Fecha>")) == 0){
 
                     leer.getline(auxiliar, 30, '/');//Dia Pelicula
-                    cine[1].pelicula[1].calendario[1].fecha.tm_mday= atoi(auxiliar);
+                    cine[contadorSalas].pelicula[contadorPeliculas].calendario[1].fecha.tm_mday= atoi(auxiliar);
                     leer.getline(auxiliar, 30, '/');//Mes Pelicula
-                    cine[1].pelicula[1].calendario[1].fecha.tm_mon= atoi(auxiliar);
+                    cine[contadorSalas].pelicula[contadorPeliculas].calendario[1].fecha.tm_mon= atoi(auxiliar);
                     leer.getline(auxiliar, 30, '\n');//Año Pelicula
-                    cine[1].pelicula[1].calendario[1].fecha.tm_year= atoi(auxiliar);
+                    cine[contadorSalas].pelicula[contadorPeliculas].calendario[1].fecha.tm_year= atoi(auxiliar);
 
                     
                 }
@@ -209,19 +210,16 @@ void cargarConfiguracionMultiplex(SalaCine* cine){
                 if((strcmp(auxiliar, "<Hora>")) == 0){
 
                     leer.getline(auxiliar, 30, ':');//Hora Pelicula
-                    cine[1].pelicula[1].calendario[1].fecha.tm_hour= atoi(auxiliar);
+                    cine[contadorSalas].pelicula[contadorPeliculas].calendario[1].fecha.tm_hour= atoi(auxiliar);
                     leer.getline(auxiliar, 30, '\n');//Minuto Pelicula
-                    cine[1].pelicula[1].calendario[1].fecha.tm_min= atoi(auxiliar);
+                    cine[contadorSalas].pelicula[contadorPeliculas].calendario[1].fecha.tm_min= atoi(auxiliar);
                     
                 }
                 leer.getline(auxiliar, 30, '\n');//<Hora/>
-                leer.getline(auxiliar, 30, '\n');//<Pelicula/>
-            }
+                leer.getline(auxiliar, 30, '\n');//<Silla>
+                if((strcmp(auxiliar, "<Sillas>")) == 0){
 
-            leer.getline(auxiliar, 30, '\n');//<Silla>
-            if((strcmp(auxiliar, "<Sillas>")) == 0){
-
-                leer.getline(auxiliar, 30, '\n');//<Preferencial>
+                    leer.getline(auxiliar, 30, '\n');//<Preferencial>
 
                 if((strcmp(auxiliar, "<Preferencial>")) == 0){
                     leer.getline(auxiliar, 30, '\n');//<Disponibles>
@@ -229,46 +227,69 @@ void cargarConfiguracionMultiplex(SalaCine* cine){
                     if((strcmp(auxiliar, "<Disponibles>")) == 0){
                         leer.getline(auxiliar, 30, '\n');//Sillas preferenciales disponibles
                         
-                        cine[1].sillasTotalPreferencial = atoi(auxiliar);
-                        cine[1].silla[atoi(auxiliar)].identificacion = new char[30];
+                        cine[contadorSalas].sillasTotalPreferencial = atoi(auxiliar);
+                        
                         for(int i = 0; i <= atoi(auxiliar); i++ ){
-                            strcpy(cine[1].silla[i].identificacion, "Preferencial");
-                            cine[1].silla[i].estado = true;
-                            cine[1].silla[i].reservada= false;
+                            
                             
                         }
-
                     }
 
                     leer.getline(auxiliar, 30, '\n');//<Disponibles/>
                     leer.getline(auxiliar, 30, '\n');//<Reservadas>
                     if((strcmp(auxiliar, "<Reservadas>")) == 0){
-                        leer.getline(auxiliar, 30, '\n');//Sillas preferenciales reservadas
-                        leer.getline(auxiliar, 30, '\n');//<Reservadas/>
+                        leer.getline(auxiliar, 30, '\n');//Sillas reservadas
+                        for(int i = 0; i <= atoi(auxiliar); i++ ){
+                            
+                            
+                        }
+                        
                     }
                 }
 
+                leer.getline(auxiliar, 30, '\n');//<Reservadas/>
+                leer.getline(auxiliar, 30, '\n');//<General/>
                 if((strcmp(auxiliar, "<General>")) == 0){
                       leer.getline(auxiliar, 30, '\n');
 
                       if((strcmp(auxiliar, "<Disponibles>")) == 0){
                         leer.getline(auxiliar, 30, '\n');//Sillas generales disponibles
-                        leer.getline(auxiliar, 30, '\n');//<Disponibles/>
+                        for(int i = 0; i <= atoi(auxiliar); i++ ){
+                            
+                            
+                        }
+                        
                       }
           
+                      leer.getline(auxiliar, 30, '\n');//<Disponibles/>
                       leer.getline(auxiliar, 30, '\n');//<Reservadas>
                       if((strcmp(auxiliar, "<Reservadas>")) == 0){
-                          leer.getline(auxiliar, 30, '\n');//Sillas generales reservadas
-                          leer.getline(auxiliar, 30, '\n');//<Reservadas/>
+                          leer.getline(auxiliar, 30, '\n');//Sillas generales reservada
+                          for(int i = 0; i <= atoi(auxiliar); i++ ){
+                            
+                            
+                        }
+                          
                       }
                 }
+                leer.getline(auxiliar, 30, '\n');//<Reservadas/>
+                leer.getline(auxiliar, 30, '\n');//<General/>
+                leer.getline(auxiliar, 30, '\n');//<Sillas/>
+                leer.getline(auxiliar, 30, '\n');//<Pelicula/>
+                leer.getline(auxiliar, 30, '\n');//<Pelicula> || <Sala/>
+                contadorPeliculas++;
+              }
+              
+
+                
             }
       }
     
         leer.getline(auxiliar, 30, '\n');
         if((strcmp(auxiliar, "<Sala>")) == 0){
-                //cargarConfiguracionMultiplex();
-            }
+           contadorSalas++;
+          //cargarConfiguracionMultiplex();
+        }
         leer.close();
         
     }
@@ -324,7 +345,7 @@ Silla* Crear_Sillas(int sillas_general, int sillas_preferencial) {
     if (y < sillas_general) {
 
         char* identificacion1 = new char[30];
-        strcpy(identificacion1, "Clasic");
+        strcpy(identificacion1, "Preferencial");
         auxiliar.identificacion = identificacion1;
         (*(sillas + y)) = auxiliar;
 
@@ -333,7 +354,7 @@ Silla* Crear_Sillas(int sillas_general, int sillas_preferencial) {
         if ((y >= sillas_general) && (y < sillas_totales)) {
 
             char* identificacion2 = new char[15];
-            strcpy(identificacion2, "Diamont");
+            strcpy(identificacion2, "General");
             auxiliar.identificacion= identificacion2;
             (*(sillas + y)) = auxiliar;
 
@@ -384,8 +405,6 @@ SalaCine* crear_Sala(int i, short int id, char* nombre, int cupoTotalSillas, cha
     <<"<Hora>"<<endl
     //Hora
     <<"<Hora/>"<<endl
-    <<"<Pelicula/>"<<endl
-
     //Sillas
     <<"<Sillas>"<<endl
     <<"<Preferencial>"<<endl
@@ -404,6 +423,7 @@ SalaCine* crear_Sala(int i, short int id, char* nombre, int cupoTotalSillas, cha
     //Sillas Generales Reservadas
     <<"<Reservadas/>"<<endl
     <<"<General/>"<<endl
+    <<"<Pelicula/>"<<endl
     <<"<Sillas/>"<<endl;
 
     while (!writing2.eof()) {
@@ -478,8 +498,14 @@ void ventaTiquete(Cliente* cliente){
   
 
 }
+void eliminarContenidoHTML(){
+  std::ofstream flujo; flujo.open("cartelera.html", std::ofstream::out | std::ofstream::trunc);
+  flujo.close();
+  //http://www.cplusplus.com/reference/fstream/ofstream/open/
+}
 
 void cartelera(){
+  eliminarContenidoHTML();
 
   fstream writing;
   string linea;
@@ -515,6 +541,7 @@ void cartelera(){
 
     writing.close();
 }
+
 
 int main(){
     system("clear");
