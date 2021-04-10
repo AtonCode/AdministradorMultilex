@@ -154,7 +154,6 @@ Actor* cargarConfiguracionMultiplex(Actor* cine){
                 leer.getline(auxiliar, 30, '\n');// Numero Id
                 cine[contadorSalas].id = atoi(auxiliar);
         }
-
         leer.getline(auxiliar, 30, '\n');//<ID/>
         leer.getline(auxiliar, 30, '\n');//<Nombre/>
         if((strcmp(auxiliar, "<Nombre>")) == 0){
@@ -162,7 +161,6 @@ Actor* cargarConfiguracionMultiplex(Actor* cine){
             cine[contadorSalas].nombre = new char[30];
             strcpy(cine[contadorSalas].nombre, auxiliar);
         }
-
         leer.getline(auxiliar, 30, '\n');//<Nombre/>
         leer.getline(auxiliar, 30, '\n');//<Cupo>
         if((strcmp(auxiliar, "<Cupo>")) == 0){
@@ -170,7 +168,6 @@ Actor* cargarConfiguracionMultiplex(Actor* cine){
             cine[contadorSalas].cupoTotalSillas = atoi(auxiliar);
             cout<<auxiliar<<endl;
         }
-
         leer.getline(auxiliar, 30, '\n');//<Cupo/>
         leer.getline(auxiliar, 30, '\n');//<Pelicula>
         while ((strcmp(auxiliar, "<Pelicula>")) == 0){
@@ -181,7 +178,6 @@ Actor* cargarConfiguracionMultiplex(Actor* cine){
             cine[contadorSalas].pelicula[contadorPeliculas].nombre = new char[30];
             strcpy(cine[contadorSalas].pelicula[contadorPeliculas].nombre, auxiliar);
           }
-
           leer.getline(auxiliar, 30, '\n');//<Nombre/>
           leer.getline(auxiliar, 30, '\n');//<ID>
           if((strcmp(auxiliar, "<ID>")) == 0){
@@ -601,7 +597,7 @@ int main(){
     system("clear");// Limpiar Consola
     Actor* cine = new Actor[1]; // Inicializamos en Cine
 
-    cine[1].sala = cargarConfiguracionMultiplex(cine); //Cargamos la Config Salas Inicial
+    //cine[1].sala = cargarConfiguracionMultiplex(cine); //Cargamos la Config Salas Inicial
     cartelera(cine); // Publicamos Cartelera
     //menuConsolaActores(); // Abrimos Menu de Navegacion
 
