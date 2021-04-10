@@ -631,7 +631,7 @@ void cartelera(Actor* cine){
 
 
               //Con estos if compararemos el nombre de la pelicula en la sala con las 7 disponibles debido a las imagenes disponibles
-              if(nombrePelicula == "BobEsponja"){
+              if((strcmp(nombrePelicula, "BobEsponja")) == 0){
                 writing.open("cartelera.html",ios::app);
                 writing
                 //agregamos la imagen correspondiente
@@ -733,7 +733,7 @@ void menuConsolaActores(){
 int main(){
 
     system("clear");// Limpiar Consola
-    Actor* cine = new Actor[1]; // Inicializamos en Cine
+    Actor* cine = new Actor; // Inicializamos en Cine
 
     cine = cargarConfiguracionMultiplex(cine); //Cargamos la Config Salas Inicial
     cartelera(cine); // Publicamos Cartelera
