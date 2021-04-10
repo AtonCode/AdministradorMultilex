@@ -556,15 +556,7 @@ void cartelera(){
     writing.close();
 }
 
-
-int main(){
-
-    system("clear");
-    SalaCine* cine;
-
-    //cargarConfiguracionMultiplex(cine);
-    //cartelera();
-
+void menuConsolaActores(){
   short int opcionActores = menuInicial();
   if(opcionActores == 1){
     short int opcionAdmin = menuAdministrador();
@@ -578,6 +570,19 @@ int main(){
   if(opcionActores == 4){
     system("clear");
   }
+}
+
+
+int main(){
+
+    system("clear");
+    SalaCine* cine;
+
+    cargarConfiguracionMultiplex(cine);
+    //cartelera();
+    //menuConsolaActores();
+
+  
   system("clear");
     
   return 0;
