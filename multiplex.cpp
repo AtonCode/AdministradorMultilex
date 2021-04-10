@@ -150,52 +150,145 @@ Actor* cargarConfiguracionMultiplex(Actor* cine){
         leer.getline(auxiliar, 30, '\n');// <ID>
         cout<<auxiliar<<endl;
 
-        /*
         if((strcmp(auxiliar, "<ID>")) == 0){
                 leer.getline(auxiliar, 30, '\n');// Numero Id
-                cine[contadorSalas].id = atoi(auxiliar);
+                cine[1].sala[contadorSalas].id = atoi(auxiliar);
         }
         leer.getline(auxiliar, 30, '\n');//<ID/>
         leer.getline(auxiliar, 30, '\n');//<Nombre/>
         if((strcmp(auxiliar, "<Nombre>")) == 0){
             leer.getline(auxiliar, 30, '\n');
-            cine[contadorSalas].nombre = new char[30];
-            strcpy(cine[contadorSalas].nombre, auxiliar);
+            cine[1].sala[contadorSalas].nombre = new char[30];
+            strcpy(cine[1].sala[contadorSalas].nombre, auxiliar);
         }
         leer.getline(auxiliar, 30, '\n');//<Nombre/>
         leer.getline(auxiliar, 30, '\n');//<Cupo>
         if((strcmp(auxiliar, "<Cupo>")) == 0){
             leer.getline(auxiliar, 30, '\n');
-            cine[contadorSalas].cupoTotalSillas = atoi(auxiliar);
+            cine[1].sala[contadorSalas].cupoTotalSillas = atoi(auxiliar);
             cout<<auxiliar<<endl;
         }
+        //Peliculas Dentro de una Sala
         leer.getline(auxiliar, 30, '\n');//<Cupo/>
         leer.getline(auxiliar, 30, '\n');//<Pelicula>
-        while ((strcmp(auxiliar, "<Pelicula>")) == 0){
+        while ((strcmp(auxiliar, "<Pelicula/>")) != 0){
           leer.getline(auxiliar, 30, '\n');//<Nombre/>
                 
           if((strcmp(auxiliar, "<Nombre>")) == 0){
             leer.getline(auxiliar, 30, '\n');//Nombre Pelicula
-            cine[contadorSalas].pelicula[contadorPeliculas].nombre = new char[30];
-            strcpy(cine[contadorSalas].pelicula[contadorPeliculas].nombre, auxiliar);
+            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].nombre = new char[30];
+            strcpy(cine[1].sala[contadorSalas].pelicula[contadorPeliculas].nombre, auxiliar);
           }
           leer.getline(auxiliar, 30, '\n');//<Nombre/>
           leer.getline(auxiliar, 30, '\n');//<ID>
           if((strcmp(auxiliar, "<ID>")) == 0){
             leer.getline(auxiliar, 30, '\n');//ID Pelicula
-            cine[contadorSalas].pelicula[contadorPeliculas].codigo= atoi(auxiliar);    
+            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].codigo= atoi(auxiliar);    
           }
-        }// While 3 Fin
-        */
-        
+
+          leer.getline(auxiliar, 30, '\n');//<ID/>
+          leer.getline(auxiliar, 30, '\n');//<Fecha>
+          if((strcmp(auxiliar, "<Fecha>")) == 0){
+
+            leer.getline(auxiliar, 30, '/');//Dia Pelicula
+            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].fecha.tm_mday= atoi(auxiliar);
+            leer.getline(auxiliar, 30, '/');//Mes Pelicula
+            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].fecha.tm_mon= atoi(auxiliar);
+            leer.getline(auxiliar, 30, '\n');//Año Pelicula
+            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].fecha.tm_year= atoi(auxiliar);
+
+                    
+          }
+
+          leer.getline(auxiliar, 30, '\n');//<Fecha/>
+          leer.getline(auxiliar, 30, '\n');//<Hora>
+          if((strcmp(auxiliar, "<Hora>")) == 0){
+
+            leer.getline(auxiliar, 30, ':');//Hora Pelicula
+            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].fecha.tm_hour= atoi(auxiliar);
+            leer.getline(auxiliar, 30, '\n');//Minuto Pelicula
+            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].fecha.tm_min= atoi(auxiliar);
+                    
+          }
+          leer.getline(auxiliar, 30, '\n');//<Hora/>
+          leer.getline(auxiliar, 30, '\n');//<Silla>
+          if((strcmp(auxiliar, "<Sillas>")) == 0){
+
+              leer.getline(auxiliar, 30, '\n');//<Preferencial>
+
+                if((strcmp(auxiliar, "<Preferencial>")) == 0){
+                    leer.getline(auxiliar, 30, '\n');//<Disponibles>
+
+                    if((strcmp(auxiliar, "<Disponibles>")) == 0){
+                        leer.getline(auxiliar, 30, '\n');//Sillas preferenciales disponibles
+                        
+                        cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].reservada = false;
+                        
+                        for(int i = 0; i <= atoi(auxiliar); i++ ){
+
+                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].code = i;
+                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].estado = true;
+                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion = new char[30];
+                            strcpy(cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion,"Preferencial" );
+                        }
+                    }
+
+                    leer.getline(auxiliar, 30, '\n');//<Disponibles/>
+                    leer.getline(auxiliar, 30, '\n');//<Reservadas>
+                    if((strcmp(auxiliar, "<Reservadas>")) == 0){
+                        leer.getline(auxiliar, 30, '\n');//Sillas reservadas
+                        for(int i = 0; i <= atoi(auxiliar); i++ ){
+                            
+                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].code = i;
+                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].estado = false;
+                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion = new char[30];
+                            strcpy(cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion,"Preferencial" );
+                            
+                        }
+                        
+                    }
+                }
+
+                leer.getline(auxiliar, 30, '\n');//<Reservadas/>
+                leer.getline(auxiliar, 30, '\n');//<General/>
+                if((strcmp(auxiliar, "<General>")) == 0){
+                      leer.getline(auxiliar, 30, '\n');
+
+                      if((strcmp(auxiliar, "<Disponibles>")) == 0){
+                        leer.getline(auxiliar, 30, '\n');//Sillas generales disponibles
+                        for(int i = 0; i <= atoi(auxiliar); i++ ){
+                            
+                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].code = i;
+                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].estado = true;
+                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion = new char[30];
+                            strcpy(cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion,"General" );
+                        }
+                        
+                      }
+          
+                      leer.getline(auxiliar, 30, '\n');//<Disponibles/>
+                      leer.getline(auxiliar, 30, '\n');//<Reservadas>
+                      if((strcmp(auxiliar, "<Reservadas>")) == 0){
+                          leer.getline(auxiliar, 30, '\n');//Sillas generales reservada
+                          for(int i = 0; i <= atoi(auxiliar); i++ ){
+                            
+                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].code = i;
+                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].estado = false;
+                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion = new char[30];
+                            strcpy(cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion,"General" );
+                        }
+                     }
+                }
+           }//sillas
+        }// While 3 Fin  peliculas  
       }// While Fin 2
-      /*
+      
       leer.getline(auxiliar, 30, '\n');
       if((strcmp(auxiliar, "<Sala>")) == 0){
            contadorSalas++;
           //cargarConfiguracionMultiplex();
       }
-      */
+      
       leer.close(); 
     }//While Fin 1
     //leer.close(); 
@@ -642,7 +735,7 @@ int main(){
     system("clear");// Limpiar Consola
     Actor* cine = new Actor[1]; // Inicializamos en Cine
 
-    //cine[1].sala = cargarConfiguracionMultiplex(cine); //Cargamos la Config Salas Inicial
+    cine = cargarConfiguracionMultiplex(cine); //Cargamos la Config Salas Inicial
     cartelera(cine); // Publicamos Cartelera
     //menuConsolaActores(); // Abrimos Menu de Navegacion
 
