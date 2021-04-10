@@ -12,7 +12,7 @@ Fecha de Entrega 12/04/21 6:59 AM
 #include <ctime>
 #include <iomanip>
 #include <sstream>
-
+#include <string.h>
 
 using namespace std;
 
@@ -421,7 +421,7 @@ void cartelera(){
   eliminarContenidoHTML();
 
   fstream writing;
-  string linea;
+  string linea,namep="YourName";//jmmm
   writing.open("cartelera.html",ios::app);
 
   if(writing.fail()){
@@ -441,16 +441,144 @@ void cartelera(){
     <<"<link rel='stylesheet' href='EstiloCartelera.css'>"<<endl
     <<"</head>"<<endl
     <<" "<<endl
-    <<"<body>"<<endl
-    <<"<h1>hello</h1>"<<endl
+
+    <<"<body>"<<endl  
+
+      <<"<div id='General'>"<<endl
+
+        <<"<div id='Titulo'>"<<endl
+
+          <<"<h1>Peliculas en nuestras salas</h1>"<<endl
+    
+        <<"</div>"<<endl
+    
+        <<"<div id='BannerIzquierdo'>"<<endl
+    
+        <<"</div>"<<endl
+
+        <<"<div id='BannerDerecho'>"<<endl
+    
+        <<"</div>"<<endl
+    
+        <<"<div>"<<endl
+                    
+          <<"<br><br><br><br>"<<endl
+    
+          <<"<table>"<<endl
+    
+            <<"<tr>"<<endl
+              <<"<th>"<<endl
+                <<"Sala"<<endl
+              <<"</th>"<<endl
+              <<"<th>"<<endl
+                <<"Nombre"<<endl
+              <<"</th>"<<endl
+              <<"<th>"<<endl
+                <<"Hora"<<endl
+              <<"</th>"<<endl
+              <<"<th>"<<endl
+                <<"Img"<<endl
+              <<"</th>"<<endl
+            <<"</tr>"<<endl;
+
+            while (!writing.eof()) {
+              getline(writing,linea);
+              cout<<linea<<endl;
+            }
+
+            writing.close();
+
+            //Este for sirve para agregar una tabla del tamaño de las salas disponibles
+            for(int i= 0; i < 3 ; i++){//Hay que añadir la cantidad de salas
+
+              //Se abre el archivo Cartelera
+              writing.open("cartelera.html",ios::app);
+
+              //Se escribe en cartelera.html el siguiente codigo para imprimir la tabla
+              writing
+
+              <<"<tr>"<<endl
+                <<"<td>Sala "<<i+1<<"</td>"<<endl //añadir funcion de sala 
+                <<"<td>"<<namep<<"</td>"<<endl //añadir funcion de nombre
+                <<"<td>Horarios</td>"<<endl; //añadir funcion de horario
+
+                while (!writing.eof()) {
+                  getline(writing,linea);
+                  cout<<linea<<endl;
+                };
+
+                //Se cierra el archivo para poder utilizar c++
+                writing.close();
+
+
+                //Con estos if compararemos el nombre de la pelicula en la sala con las 7 disponibles por la imagen
+                if(namep == "BobEsponja"){
+                  writing.open("cartelera.html",ios::app);
+                  writing
+                  <<"<td><img id='ImagenCentrada' src='Imagenes/BobEsponja.jpg' style='width:416px;height:594px;'></td>"<<endl;
+                  writing.close();
+                }
+                else if (namep == "EndGame"){
+                  writing.open("cartelera.html",ios::app);
+                  writing
+                  <<"<td><img id='ImagenCentrada' src='Imagenes/EndGame.jpg' style='width:416px;height:594px;'></td>"<<endl;
+                  writing.close();
+                }
+                else if(namep == "GrandesHeroes"){
+                  writing.open("cartelera.html",ios::app);
+                  writing
+                  <<"<td><img id='ImagenCentrada' src='Imagenes/GrandesHeroes.jpg' style='width:416px;height:594px;'></td>"<<endl;
+                  writing.close();
+                }
+                else if(namep == "MyHeroAcademia"){
+                  writing.open("cartelera.html",ios::app);
+                  writing
+                  <<"<td><img id='ImagenCentrada' src='Imagenes/MyHeroAcademia.jpg' style='width:416px;height:594px;'></td>"<<endl;
+                  writing.close();
+                }
+                else if(namep == "RapidosYFuriosos7"){
+                  writing.open("cartelera.html",ios::app);
+                  writing
+                  <<"<td><img id='ImagenCentrada' src='Imagenes/RapidosYFuriosos7.jpg' style='width:416px;height:594px;'></td>"<<endl;
+                  writing.close();
+                }
+                else if(namep == "ReyLeon"){
+                  writing.open("cartelera.html",ios::app);
+                  writing
+                  <<"<td><img id='ImagenCentrada' src='Imagenes/ReyLeon.jpg' style='width:416px;height:594px;'></td>"<<endl;
+                  writing.close();
+                }
+                else if(namep == "YourName"){
+                  writing.open("cartelera.html",ios::app);
+                  writing
+                  <<"<td><img id='ImagenCentrada' src='Imagenes/YourName.jpg' style='width:70px;height:120px;'></td>"<<endl;
+                  writing.close();
+                }
+              writing.open("cartelera.html",ios::app);
+              writing
+
+              <<"</tr>"<<endl;
+
+              writing.close();
+            }
+
+          writing.open("cartelera.html",ios::app);
+          writing  
+            
+          <<"</table>"<<endl
+    
+        <<"</div>"<<endl
+    
+      <<"</div>"<<endl
     <<"</body>"<<endl
+
     <<"</html>"<<endl;
 
   
     while (!writing.eof()) {
             getline(writing,linea);
             cout<<linea<<endl;
-        }
+    }
 
     writing.close();
 }
