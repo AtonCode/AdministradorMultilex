@@ -50,88 +50,17 @@ struct Actor{
 };
 
 //FUNCIONES
-//Menu de Precentacion del Programa
-short int menuInicial(){
-    short int opcion=0;
+void menuInicial(Actor* cine);
+void menuAdministrador(Actor* cine);
+void menuCliente(Actor* cine);
+void menuTaquilla(Actor* cine);
 
-    cout<<"Bienvenido a Cine Multiplex Global" << endl;
-    cout<<" "<< endl;
-    cout<<"Usted es:"<<endl;
-    cout<<"1. Administrador"<<endl;
-    cout<<"2. Cliente"<<endl;
-    cout<<"3. Taquilla"<< endl;
-    cout<<" "<< endl;
-    cout<<"Si no desea continuar presione 4"<<endl;
-    cin>>opcion;
-    cout<<" "<< endl;
-    system("clear");
 
-    return opcion;
-}
-
-//ActorUno
-//Menu con Acciones permitadas para los Clientes del Cine
-short int menuCliente(){
-  short int opcion = 0;
-
-    cout<<" Estimado Cliente que desea?:"<<endl;
-    cout<< " " << endl;
-    cout<<"1. Ver Cartelera"<<endl; 
-    cout<<"1. Adquirir tiquetes"<<endl; 
-    cout<<"2. Salir"<<endl;
-    cin>>opcion;
-    cout<<" "<< endl;
-    system("clear");
-
-  return opcion;
-}
-
-//ActorDos
-//Menu con Acciones permitadas para las taquillas fisicas del Cine
-short int menuTaquilla(){
-  short int opcion = 0;
-
-  cout<< "Menu Taquilla Fisica"<<endl;
-  cout<< "1. Vender tiquetes"<<endl; 
-  cout<< " "<< endl;
-
-  system("clear");
-  return opcion;
-}
-
-//ActorTres
-//Menu con Acciones permitadas para el Administrador del Cine
-short int menuAdministrador(){
-  short int opcion = 0;
-
-    cout <<"        Menu Administrador"<< endl;
-    cout<< " " << endl;
-
-    cout<< " ¿Que desea hacer?"<<endl;
-    cout<< " " << endl;
-    cout<< "1. Configuracion General del Multiplex." <<endl;
-    cout<< "2. Consulta Salas de Cines." <<endl;
-    cout<< "---" << endl;
-    cout<< "3. Adicionar Sala de Cine." <<endl;
-    cout<< "4. Adicionar Sillas a una Sala de Cine." <<endl;
-    cout<< "5. Adición de una película y su asociación con la sala(s) y hora(s) de presentacion." <<endl;
-    cout<< "---" << endl;
-    cout<< "6. Eliminar Sala de Cine." <<endl;
-    cout<< "7. Eliminar Sillas a una Sala de Cine." <<endl;
-    cout<< "---" << endl;
-
-    cout<< "8. Salir." << endl;
-    cin >> opcion;
-    cout<< " " << endl;
-    system("clear");
-
-    return opcion;
-}
-
-Actor* cargarConfiguracionMultiplex(Actor* cine){
+Actor* cargarConfiguracionMultiplex(){
 
     ifstream leer("multiplex2020-4.txt", ios::in);
     char* auxiliar = new char[30];
+    Actor* cine;
     cine = new Actor[1];
 
     short int contadorSalas = 1;
@@ -705,39 +634,114 @@ void cartelera(Actor* cine){
     writing.close();
 }
 
-void menuConsolaActores(){
-  short int opcionActores = menuInicial();
-  if(opcionActores == 1){
-    short int opcionAdmin = menuAdministrador();
-    if(opcionAdmin==1){}
-    if(opcionAdmin==2){}
-    if(opcionAdmin==3){}
-  }
-  if(opcionActores == 2){
-    short int opcionCliente = menuCliente();
-    if(opcionCliente==1){}
-    if(opcionCliente==2){}
-  }
-  if(opcionActores == 3){
-    short int opcionTaquilla = menuTaquilla();
-    if(opcionTaquilla==1){}
-    if(opcionTaquilla==2){}
-    
-  }
-  if(opcionActores == 4){
-    system("clear");
-  }
-}
-
-
 int main(){
 
     system("clear");// Limpiar Consola
-    Actor* cine = new Actor; // Inicializamos en Cine
+    Actor cine, *ptrCine = &cine;
+    ptrCine = new Actor; // Inicializamos en Cine
 
-    cine = cargarConfiguracionMultiplex(cine); //Cargamos la Config Salas Inicial
-    cartelera(cine); // Publicamos Cartelera
-    //menuConsolaActores(); // Abrimos Menu de Navegacion
+    //ptrCine = cargarConfiguracionMultiplex(); //Cargamos la Config Salas Inicial
+    //cartelera(ptrCine); // Publicamos Cartelera
+    menuInicial(ptrCine); // Abrimos Menu de Navegacion
 
   return 0;
+}
+
+//ActorDos
+//Menu con Acciones permitadas para las taquillas fisicas del Cine
+void menuTaquilla(Actor* cine){
+  short int opcion = 0;
+
+  cout<< "Menu Taquilla Fisica"<<endl;
+  cout<< "1. Vender tiquetes"<<endl;
+  cout<< "2. Salir"<<endl; 
+  cout<< " "<< endl;
+  cin>>opcion;
+  cout<<" "<< endl;
+  if(opcion == 1){}//Adquirir Tiquets
+  if(opcion == 2){menuInicial(cine);}//Volver a menu Inicial
+
+  system("clear");
+}
+
+//ActorUno
+//Menu con Acciones permitadas para los Clientes del Cine
+void menuCliente(Actor* cine){
+  short int opcion = 0;
+
+    cout<<" Estimado Cliente que desea?:"<<endl;
+    cout<< " " << endl;
+    cout<<"1. Ver Cartelera"<<endl; 
+    cout<<"2. Adquirir tiquetes"<<endl; 
+    cout<<"3. Salir"<<endl;
+    cin>>opcion;
+    cout<<" "<< endl;
+    if(opcion == 1){cartelera(cine); menuCliente(cine);}
+    if(opcion == 2){}//Adquirir Tiquetes
+    if(opcion == 3){menuInicial(cine);}//Volver a menu Inicial
+
+
+    system("clear");
+}
+
+//ActorTres
+//Menu con Acciones permitadas para el Administrador del Cine
+void menuAdministrador(Actor* cine){
+  short int opcion = 0;
+
+    cout <<"        Menu Administrador"<< endl;
+    cout<< " " << endl;
+
+    cout<< " ¿Que desea hacer?"<<endl;
+    cout<< " " << endl;
+    cout<< "1. Configuracion General del Multiplex." <<endl;
+    cout<< "2. Consulta Salas de Cines." <<endl;
+    cout<< "---" << endl;
+    cout<< "3. Adicionar Sala de Cine." <<endl;
+    cout<< "4. Adicionar Sillas a una Sala de Cine." <<endl;
+    cout<< "5. Adición de una película y su asociación con la sala(s) y hora(s) de presentacion." <<endl;
+    cout<< "---" << endl;
+    cout<< "6. Eliminar Sala de Cine." <<endl;
+    cout<< "7. Eliminar Sillas a una Sala de Cine." <<endl;
+    cout<< "---" << endl;
+
+    cout<< "8. Salir." << endl;
+    cin >> opcion;
+    cout<< " " << endl;
+
+    if(opcion == 1){}//Configuracion apartir del txt
+    if(opcion == 2){}//Consultar Salas De Cine
+    if(opcion == 3){}//Adicion De Sala de Cine
+    if(opcion == 4){}//Adicion de Sillas a Sala de Cine
+    if(opcion == 5){}//Adicion de una Pelicual
+    if(opcion == 6){}//Eliminar Sala
+    if(opcion == 7){}//Eliminar Silla
+    if(opcion == 8){menuInicial(cine);}//Volver a menu Inicial
+
+    
+    system("clear");
+}
+
+//Menu de Precentacion del Programa
+void menuInicial(Actor* cine){
+    short int opcion=0;
+
+    cout<<"Bienvenido a Cine Multiplex Global" << endl;
+    cout<<" "<< endl;
+    cout<<"Usted es:"<<endl;
+    cout<<"1. Administrador"<<endl;
+    cout<<"2. Cliente"<<endl;
+    cout<<"3. Taquilla"<< endl;
+    cout<<" "<< endl;
+    cout<<"Si no desea continuar presione 4"<<endl;
+    cin>>opcion;
+    cout<<" "<< endl;
+    if(opcion == 1){menuAdministrador(cine);}// Menu Administrador
+    if(opcion == 2){menuCliente(cine);}// Menu Cliente
+    if(opcion == 3){menuTaquilla(cine);}//Menu Taquilla
+    if(opcion == 4){system("clear");}// Salir
+    
+    system("clear");
+
+    
 }
