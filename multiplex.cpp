@@ -18,6 +18,7 @@ using namespace std;
 
 //ESTRUCTURAS
 struct Silla {
+  short int code;
   char* identificacion; //Clase de Silla Diamante o Classic
   bool estado; //ACTIVA O ELIMINADA
   bool reservada; // LIBRE O RESERVADA
@@ -227,11 +228,14 @@ void cargarConfiguracionMultiplex(SalaCine* cine){
                     if((strcmp(auxiliar, "<Disponibles>")) == 0){
                         leer.getline(auxiliar, 30, '\n');//Sillas preferenciales disponibles
                         
-                        cine[contadorSalas].sillasTotalPreferencial = atoi(auxiliar);
+                        cine[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].reservada = false;
                         
                         for(int i = 0; i <= atoi(auxiliar); i++ ){
-                            
-                            
+
+                            cine[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].code = i;
+                            cine[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].estado = true;
+                            cine[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion = new char[30];
+                            strcpy(cine[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion,"Preferencial" );
                         }
                     }
 
@@ -241,6 +245,10 @@ void cargarConfiguracionMultiplex(SalaCine* cine){
                         leer.getline(auxiliar, 30, '\n');//Sillas reservadas
                         for(int i = 0; i <= atoi(auxiliar); i++ ){
                             
+                            cine[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].code = i;
+                            cine[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].estado = false;
+                            cine[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion = new char[30];
+                            strcpy(cine[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion,"Preferencial" );
                             
                         }
                         
@@ -256,7 +264,10 @@ void cargarConfiguracionMultiplex(SalaCine* cine){
                         leer.getline(auxiliar, 30, '\n');//Sillas generales disponibles
                         for(int i = 0; i <= atoi(auxiliar); i++ ){
                             
-                            
+                            cine[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].code = i;
+                            cine[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].estado = true;
+                            cine[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion = new char[30];
+                            strcpy(cine[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion,"General" );
                         }
                         
                       }
@@ -267,7 +278,10 @@ void cargarConfiguracionMultiplex(SalaCine* cine){
                           leer.getline(auxiliar, 30, '\n');//Sillas generales reservada
                           for(int i = 0; i <= atoi(auxiliar); i++ ){
                             
-                            
+                            cine[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].code = i;
+                            cine[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].estado = false;
+                            cine[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion = new char[30];
+                            strcpy(cine[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion,"General" );
                         }
                           
                       }
