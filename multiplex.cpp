@@ -24,14 +24,10 @@ struct Silla {
   bool reservada; // LIBRE O RESERVADA
 };
 
-struct Calendario {
-  tm fecha;
-};
-
 struct Pelicula {
   char* nombre;
   int codigo;
-  Calendario* calendario;
+  tm fecha;
   Silla* silla;
 };
 
@@ -45,13 +41,11 @@ struct SalaCine {
     short int sillasTotalGenerales;
 };
 
-struct Cliente{
+struct Actor{
   short int identificacion;
   char* nombre;
   char* apellido;
-  Silla* sillas;
   SalaCine* sala;
-  Pelicula* pelicula;
 };
 
 //FUNCIONES
@@ -133,23 +127,24 @@ short int menuAdministrador(){
     return opcion;
 }
 
-SalaCine* cargarConfiguracionMultiplex(SalaCine* cine){
+Actor* cargarConfiguracionMultiplex(Actor* cine){
 
     ifstream leer("multiplex2020-4.txt", ios::in);
     char* auxiliar = new char[30];
+    cine = new Actor[1];
 
-    short int contadorSalas = 0;
-    short int contadorPeliculas = 0;
+    short int contadorSalas = 1;
+    short int contadorPeliculas = 1;
     
 
     if(!leer.is_open()){ std::cout << "Error: File Open" << '\n';}
 
-    while(!leer.eof()){
-      cine = new SalaCine[contadorSalas];
-
+    while(!leer.eof()){// Mientras el Archivo este A
+      
       leer.getline(auxiliar, 30, '\n');//<Sala>
       cout<<auxiliar<<endl;
       while ((strcmp(auxiliar, "<Sala/>")) != 0){
+        //cine[1].sala[contadorSalas].estado = true;
 
         leer.getline(auxiliar, 30, '\n');// <ID>
         cout<<auxiliar<<endl;
@@ -206,6 +201,7 @@ SalaCine* cargarConfiguracionMultiplex(SalaCine* cine){
       */
       leer.close(); 
     }//While Fin 1
+    //leer.close(); 
 return cine;
 }
 
@@ -279,7 +275,7 @@ Silla* Crear_Sillas(int sillas_general, int sillas_preferencial) {
 }
 
 //Adicion de Salas
-SalaCine* crear_Sala(int i, short int id, char* nombre, int cupoTotalSillas, char* nombrePelicula, int codigo, Calendario* calendario, tm hora, int sillas_general, int sillas_preferencial){
+SalaCine* crear_Sala(int i, short int id, char* nombre, int cupoTotalSillas, char* nombrePelicula, int codigo, tm fecha, int sillas_general, int sillas_preferencial){
 
   fstream writing2;
   string linea;
@@ -360,7 +356,7 @@ SalaCine* eliminar_Sala(int numeroSalaEliminar, SalaCine *sala){
 
 
 //Funcion Que permite que un usuario despues de ver la cartelera reserve Sala y sillas de la pelicula que desea ver en el horario correspondiente.
-void ventaTiquete(Cliente* cliente){
+void ventaTiquete(Actor* cliente){
   short int codigoSeleccion;
   short int totalSillas = 0;
 
@@ -602,12 +598,12 @@ void menuConsolaActores(){
 
 int main(){
 
-    system("clear");
-    SalaCine* cine;
+    system("clear");// Limpiar Consola
+    Actor* cine; // Inicializamos en Cine
 
-    //cine = cargarConfiguracionMultiplex(cine);
-    cartelera();
-    //menuConsolaActores();
+    cine = cargarConfiguracionMultiplex(cine); //Cargamos la Config Salas Inicial
+    cartelera(); // Publicamos Cartelera
+    //menuConsolaActores(); // Abrimos Menu de Navegacion
 
   return 0;
 }
