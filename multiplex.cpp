@@ -413,7 +413,7 @@ void eliminarContenidoHTML(){
   //http://www.cplusplus.com/reference/fstream/ofstream/open/
 }
 
-void cartelera(){
+void cartelera(Actor*){
   eliminarContenidoHTML();
 
   fstream writing;
@@ -494,9 +494,9 @@ void cartelera(){
               writing
 
               <<"<tr>"<<endl
-                <<"<td>Sala "<<i+1<<"</td>"<<endl //añadir funcion de sala 
-                <<"<td>"<<namep<<"</td>"<<endl //añadir funcion de nombre
-                <<"<td>Horarios</td>"<<endl; //añadir funcion de horario
+                <<"<td>Sala "<</*  */<<"</td>"<<endl //añadir funcion de sala 
+                <<"<td>"<</*  */<<"</td>"<<endl //añadir funcion de nombre
+                <<"<td>"<</*  */<<"</td>"<<endl; //añadir funcion de horario
 
                 while (!writing.eof()) {
                   getline(writing,linea);
@@ -511,43 +511,43 @@ void cartelera(){
                 if(namep == "BobEsponja"){
                   writing.open("cartelera.html",ios::app);
                   writing
-                  <<"<td><img id='ImagenCentrada' src='Imagenes/BobEsponja.jpg' style='width:416px;height:594px;'></td>"<<endl;
+                  <<"<td><img id='ImagenCentrada' src='Imagenes/BobEsponja.jpg' style='width:140px;height:240px;'></td>"<<endl;
                   writing.close();
                 }
                 else if (namep == "EndGame"){
                   writing.open("cartelera.html",ios::app);
                   writing
-                  <<"<td><img id='ImagenCentrada' src='Imagenes/EndGame.jpg' style='width:416px;height:594px;'></td>"<<endl;
+                  <<"<td><img id='ImagenCentrada' src='Imagenes/EndGame.jpg' style='width:140px;height:240px;'></td>"<<endl;
                   writing.close();
                 }
                 else if(namep == "GrandesHeroes"){
                   writing.open("cartelera.html",ios::app);
                   writing
-                  <<"<td><img id='ImagenCentrada' src='Imagenes/GrandesHeroes.jpg' style='width:416px;height:594px;'></td>"<<endl;
+                  <<"<td><img id='ImagenCentrada' src='Imagenes/GrandesHeroes.jpg' style='width:140px;height:240px;'></td>"<<endl;
                   writing.close();
                 }
                 else if(namep == "MyHeroAcademia"){
                   writing.open("cartelera.html",ios::app);
                   writing
-                  <<"<td><img id='ImagenCentrada' src='Imagenes/MyHeroAcademia.jpg' style='width:416px;height:594px;'></td>"<<endl;
+                  <<"<td><img id='ImagenCentrada' src='Imagenes/MyHeroAcademia.jpg' style='width:140px;height:240px;'></td>"<<endl;
                   writing.close();
                 }
                 else if(namep == "RapidosYFuriosos7"){
                   writing.open("cartelera.html",ios::app);
                   writing
-                  <<"<td><img id='ImagenCentrada' src='Imagenes/RapidosYFuriosos7.jpg' style='width:416px;height:594px;'></td>"<<endl;
+                  <<"<td><img id='ImagenCentrada' src='Imagenes/RapidosYFuriosos7.jpg' style='width:140px;height:240px;'></td>"<<endl;
                   writing.close();
                 }
                 else if(namep == "ReyLeon"){
                   writing.open("cartelera.html",ios::app);
                   writing
-                  <<"<td><img id='ImagenCentrada' src='Imagenes/ReyLeon.jpg' style='width:416px;height:594px;'></td>"<<endl;
+                  <<"<td><img id='ImagenCentrada' src='Imagenes/ReyLeon.jpg' style='width:140px;height:240px;'></td>"<<endl;
                   writing.close();
                 }
                 else if(namep == "YourName"){
                   writing.open("cartelera.html",ios::app);
                   writing
-                  <<"<td><img id='ImagenCentrada' src='Imagenes/YourName.jpg' style='width:70px;height:120px;'></td>"<<endl;
+                  <<"<td><img id='ImagenCentrada' src='Imagenes/YourName.jpg' style='width:140px;height:240px;'></td>"<<endl;
                   writing.close();
                 }
               writing.open("cartelera.html",ios::app);
@@ -602,7 +602,7 @@ int main(){
     Actor* cine = new Actor[1]; // Inicializamos en Cine
 
     cine[1].sala = cargarConfiguracionMultiplex(cine); //Cargamos la Config Salas Inicial
-    cartelera(); // Publicamos Cartelera
+    cartelera(cine); // Publicamos Cartelera
     //menuConsolaActores(); // Abrimos Menu de Navegacion
 
   return 0;
