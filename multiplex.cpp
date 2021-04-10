@@ -296,20 +296,20 @@ SalaCine* crear_Sala(int i, short int id, char* nombre, int cupoTotalSillas, cha
     <<nombre<<endl
     <<"<Nombre/>"<<endl
     <<"<Cupo>"<<endl
-    //Cupo
+    <<cupoTotalSillas<<endl
     <<"<Cupo/>"<<endl
     <<"<Pelicula>"<<endl
     <<"<Nombre>"<<endl
-    //Nombre pelicula
+    <<nombrePelicula<<endl
     <<"<Nombre/>"<<endl
     <<"<ID>"<<endl
-    //ID pelicula
+    <<codigo<<endl
     <<"<ID/>"<<endl
     <<"<Fecha>"<<endl
-    //Fecha
+    <<fecha.tm_mday<<endl
     <<"<Fecha/>"<<endl
     <<"<Hora>"<<endl
-    //Hora
+    <<fecha.tm_hour<<":"<<fecha.tm_min<<endl
     <<"<Hora/>"<<endl
     //Sillas
     <<"<Sillas>"<<endl
@@ -404,6 +404,7 @@ void ventaTiquete(Actor* cliente){
   
 
 }
+//Esta funcion es utilizada para eliminar el contenido del HTML
 void eliminarContenidoHTML(){
   std::ofstream flujo; flujo.open("cartelera.html", std::ofstream::out | std::ofstream::trunc);
   flujo.close();
@@ -411,36 +412,52 @@ void eliminarContenidoHTML(){
 }
 
 void cartelera(Actor* cine){
+
+  //Se da uso a la función eliminar Contenido HTML para que no se escriba varias veces la pagina y no se repitan las tablas
   eliminarContenidoHTML();
+
+  //se declara variable dinamica de tipo actor, para poder controlar asi los datos recogidos de la pelicula
   cine = new Actor[1];
 
+  // Con el uso de una variable writing se da apertura/cración a cartelera.html
   fstream writing;
   string linea;
 
   writing.open("cartelera.html",ios::app);
 
+  //En caso de que no pueda ser creada o abierta se dara el siguiente mensaje de error
   if(writing.fail()){
     cout<< "No se puede abrir el archivo" << endl;
   }
 
+  //con Writing escribiremos de manra sencilla el codigo HTML en el archivo correspondiente
     writing
 
+    //En este primer momento se trabaja la inicialización del HTML, su lenguaje, valores para que trabaje con el teclado en español
     <<"<!DOCTYPE html>"<<endl
     <<"<html lang='es'>"<<endl
     <<" "<<endl
+
+    //Este es el head en el que se trabajan los datos mencionados anteriormente
     <<"<head>"<<endl
     <<"<meta charset='UTF-8'>"<<endl
     <<"<meta http-equiv='X-UA-Compatible' content='IE=edge'>"<<endl
     <<"<meta name='viewport' content='width=device-width, initial-scale=1.0'>"<<endl
+    //Este Title es crado para darle un nombre a la pestaña
     <<"<title>CARTELERA</title>"<<endl
+    //Con este link unimos el HTML a un archivo.css, asi le daremos un mejor diseño
     <<"<link rel='stylesheet' href='EstiloCartelera.css'>"<<endl
     <<"</head>"<<endl
     <<" "<<endl
 
+    //En el cuerpo crearemos la tabla
     <<"<body>"<<endl  
 
+
+      //con estos div le daremos un orden a la pestaña n la que se visualizara la cartelera
       <<"<div id='General'>"<<endl
 
+        //Agregamos el titulo
         <<"<div id='Titulo'>"<<endl
 
           <<"<h1>Peliculas en Nuestras Salas</h1>"<<endl
@@ -458,9 +475,12 @@ void cartelera(Actor* cine){
         <<"<div>"<<endl
                     
           <<"<br><br><br><br>"<<endl
-    
+
+
+          //Creamos la tabla
           <<"<table>"<<endl
-    
+
+            //Esta primera parte define los titulos de cada columna de la tabla, Saka, Nombre, Hora, Poster
             <<"<tr>"<<endl
               <<"<th>"<<endl
                 <<"Sala"<<endl
@@ -472,86 +492,95 @@ void cartelera(Actor* cine){
                 <<"Hora"<<endl
               <<"</th>"<<endl
               <<"<th>"<<endl
-                <<"Img"<<endl
+                <<"Poster"<<endl
               <<"</th>"<<endl
             <<"</tr>"<<endl;
 
+            //While utilizado para evitar que el archivo se siga escribiendo  en la linea en la que estaba y de un salto de lina
+            //de esta manera de ebita un bucle infinito
             while (!writing.eof()) {
               getline(writing,linea);
               cout<<linea<<endl;
             }
 
+            //Cerramos el archivo
             writing.close();
 
-            //Este for sirve para agregar una tabla del tamaño de las salas disponibles
-              //Se abre el archivo Cartelera
+            
+            //Se abre el archivo Cartelera
             writing.open("cartelera.html",ios::app);
 
+            //En este char* nombre Pelicula guardaremos el nombre de las peliculas
             char* nombrePelicula = new char[30];
+            //Este for sirve para agregar una tabla del tamaño de las salas disponibles
             for(int i= 0; i < cine[0].numSalas ; i++){//Hay que añadir la cantidad de salas
               //Se escribe en cartelera.html el siguiente codigo para imprimir la tabla
 
+              //copiamos el nombre y lo guardamos en la variable anteriormente mencionada
               strcpy(cine[0].sala[i].pelicula[i].nombre, nombrePelicula);
               
               writing
 
+              //Por cada fila de la tabla se va a escribir la sala en donde se ubica, el nombre de la pelicula y hora
+
               <<"<tr>"<<endl
-                <<"<td>Sala "<<cine[0].sala[i].id<<"</td>"<<endl //añadir funcion de sala 
-                <<"<td>"<<nombrePelicula<<"</td>"<<endl //añadir funcion de nombre
-                <<"<td>"<<cine[0].sala[i].pelicula[i].fecha.tm_yday<<"</td>"<<endl; //añadir funcion de horario
+              <<"<td>Sala "<<cine[0].sala[i].id<<"</td>"<<endl //añadir funcion de sala 
+              <<"<td>"<<nombrePelicula<<"</td>"<<endl //añadir funcion de nombre
+              <<"<td>"<<cine[0].sala[i].pelicula[i].fecha.tm_hour<<":"<<cine[0].sala[i].pelicula[i].fecha.tm_min<<"</td>"<<endl; //añadir funcion de horario
 
-                while (!writing.eof()) {
-                  getline(writing,linea);
-                  cout<<linea<<endl;
-                };
+              while (!writing.eof()) {
+                getline(writing,linea);
+                cout<<linea<<endl;
+              };
 
-                //Se cierra el archivo para poder utilizar c++
+              //Se cierra el archivo para poder utilizar c++
+              writing.close();
+
+
+              //Con estos if compararemos el nombre de la pelicula en la sala con las 7 disponibles debido a las imagenes disponibles
+              if(nombrePelicula == "BobEsponja"){
+                writing.open("cartelera.html",ios::app);
+                writing
+                //agregamos la imagen correspondiente
+                <<"<td><img id='ImagenCentrada' src='Imagenes/BobEsponja.jpg' style='width:140px;height:240px;'></td>"<<endl;
                 writing.close();
-
-
-                //Con estos if compararemos el nombre de la pelicula en la sala con las 7 disponibles por la imagen
-                if(nombrePelicula == "BobEsponja"){
-                  writing.open("cartelera.html",ios::app);
-                  writing
-                  <<"<td><img id='ImagenCentrada' src='Imagenes/BobEsponja.jpg' style='width:140px;height:240px;'></td>"<<endl;
-                  writing.close();
-                }
-                else if (nombrePelicula == "EndGame"){
-                  writing.open("cartelera.html",ios::app);
-                  writing
-                  <<"<td><img id='ImagenCentrada' src='Imagenes/EndGame.jpg' style='width:140px;height:240px;'></td>"<<endl;
-                  writing.close();
-                }
-                else if(nombrePelicula == "GrandesHeroes"){
-                  writing.open("cartelera.html",ios::app);
-                  writing
-                  <<"<td><img id='ImagenCentrada' src='Imagenes/GrandesHeroes.jpg' style='width:140px;height:240px;'></td>"<<endl;
-                  writing.close();
-                }
-                else if(nombrePelicula == "MyHeroAcademia"){
-                  writing.open("cartelera.html",ios::app);
-                  writing
-                  <<"<td><img id='ImagenCentrada' src='Imagenes/MyHeroAcademia.jpg' style='width:140px;height:240px;'></td>"<<endl;
-                  writing.close();
-                }
-                else if(nombrePelicula == "RapidosYFuriosos7"){
-                  writing.open("cartelera.html",ios::app);
-                  writing
-                  <<"<td><img id='ImagenCentrada' src='Imagenes/RapidosYFuriosos7.jpg' style='width:140px;height:240px;'></td>"<<endl;
-                  writing.close();
-                }
-                else if(nombrePelicula == "ReyLeon"){
-                  writing.open("cartelera.html",ios::app);
-                  writing
-                  <<"<td><img id='ImagenCentrada' src='Imagenes/ReyLeon.jpg' style='width:140px;height:240px;'></td>"<<endl;
-                  writing.close();
-                }
-                else if(nombrePelicula == "YourName"){
-                  writing.open("cartelera.html",ios::app);
-                  writing
-                  <<"<td><img id='ImagenCentrada' src='Imagenes/YourName.jpg' style='width:140px;height:240px;'></td>"<<endl;
-                  writing.close();
-                }
+              }
+              else if (nombrePelicula == "EndGame"){
+                writing.open("cartelera.html",ios::app);
+                writing
+                <<"<td><img id='ImagenCentrada' src='Imagenes/EndGame.jpg' style='width:140px;height:240px;'></td>"<<endl;
+                writing.close();
+              }
+              else if(nombrePelicula == "GrandesHeroes"){
+                writing.open("cartelera.html",ios::app);
+                writing
+                <<"<td><img id='ImagenCentrada' src='Imagenes/GrandesHeroes.jpg' style='width:140px;height:240px;'></td>"<<endl;
+                writing.close();
+              }
+              else if(nombrePelicula == "MyHeroAcademia"){
+                writing.open("cartelera.html",ios::app);
+                writing
+                <<"<td><img id='ImagenCentrada' src='Imagenes/MyHeroAcademia.jpg' style='width:140px;height:240px;'></td>"<<endl;
+                writing.close();
+              }
+              else if(nombrePelicula == "RapidosYFuriosos7"){
+                writing.open("cartelera.html",ios::app);
+                writing
+                <<"<td><img id='ImagenCentrada' src='Imagenes/RapidosYFuriosos7.jpg' style='width:140px;height:240px;'></td>"<<endl;
+                writing.close();
+              }
+              else if(nombrePelicula == "ReyLeon"){
+                writing.open("cartelera.html",ios::app);
+                writing
+                <<"<td><img id='ImagenCentrada' src='Imagenes/ReyLeon.jpg' style='width:140px;height:240px;'></td>"<<endl;
+                writing.close();
+              }
+              else if(nombrePelicula == "YourName"){
+                writing.open("cartelera.html",ios::app);
+                writing
+                <<"<td><img id='ImagenCentrada' src='Imagenes/YourName.jpg' style='width:140px;height:240px;'></td>"<<endl;
+                writing.close();
+              }
               writing.open("cartelera.html",ios::app);
               writing
 
@@ -559,7 +588,8 @@ void cartelera(Actor* cine){
 
               writing.close();
             }
-
+            
+          //cerramos la tabla el div general, el body y el html
           writing.open("cartelera.html",ios::app);
           writing  
             
@@ -578,6 +608,7 @@ void cartelera(Actor* cine){
             cout<<linea<<endl;
     }
 
+    //cerramos por completo el archivo
     writing.close();
 }
 

@@ -1,3 +1,8 @@
+/*Todas las sguientes son modificaciones en el tipo de objeto que se trabaja
+los que tienen #son id para trabajar el diseño de un objet en concreto
+se cambiaron las margenes, los colores, se crearon divs para organizar de mejor manera la pestaña
+se modifico el diseño de tabla y demas funciones*/
+
 *{
     margin: 0;
     padding: 0;
@@ -18,6 +23,7 @@ table{
     border:4px solid darkblue;
     width: 80%;
     margin: auto;
+    background-color: aquamarine;
     
 }
 
