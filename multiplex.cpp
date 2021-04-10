@@ -599,9 +599,9 @@ void menuConsolaActores(){
 int main(){
 
     system("clear");// Limpiar Consola
-    Actor* cine; // Inicializamos en Cine
+    Actor* cine = new Actor[1]; // Inicializamos en Cine
 
-    cine = cargarConfiguracionMultiplex(cine); //Cargamos la Config Salas Inicial
+    cine[1].sala = cargarConfiguracionMultiplex(cine); //Cargamos la Config Salas Inicial
     cartelera(); // Publicamos Cartelera
     //menuConsolaActores(); // Abrimos Menu de Navegacion
 
