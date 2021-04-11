@@ -63,7 +63,7 @@ void printTiquet(char* nombre, char* apellido, char* nombreSala ,char* nombrePel
 void ventaTiquete(Actor* cliente);
 void eliminarContenidoHTML();
 void cartelera(Actor* cine);
-Silla* Crear_Sillas(int sillas_general, int sillas_preferencial);
+Silla* crearSilla(int sillasGeneral, int sillasPreferencial);
 SalaCine* crear_Sala(int i, short int id, char* nombre, int cupoTotalSillas, char* nombrePelicula, int codigo, tm fecha, int sillas_general, int sillas_preferencial);
 SalaCine* eliminar_Sala(int numeroSalaEliminar, SalaCine *sala);
 
@@ -71,6 +71,10 @@ SalaCine* eliminar_Sala(int numeroSalaEliminar, SalaCine *sala);
 int main(){
 
   system("clear");// Limpiar Consola
+  Actor cine;
+  Actor* ptrCine;
+
+  ptrCine = cargarConfiguracionMultiplex();
     
     
     
@@ -184,6 +188,7 @@ Actor* cargarConfiguracionMultiplex(){
     ifstream leer("multiplex2020-4.txt", ios::in);
     char* auxiliar = new char[30];
     Actor* cine = new Actor;
+    
 
     short int contadorSalas = 1;
     short int contadorPeliculas = 1;
@@ -196,7 +201,7 @@ Actor* cargarConfiguracionMultiplex(){
       leer.getline(auxiliar, 30, '\n');//<Sala>
       cout<<auxiliar<<endl;
       while ((strcmp(auxiliar, "<Sala/>")) != 0){
-        //cine[1].sala[contadorSalas].estado = true;
+        cine->sala[contadorSalas].pelicula[contadorPeliculas].nombre = new char[30];
 
         leer.getline(auxiliar, 30, '\n');// <ID>
         cout<<auxiliar<<endl;
@@ -211,7 +216,7 @@ Actor* cargarConfiguracionMultiplex(){
         leer.getline(auxiliar, 30, '\n');//<Nombre/>
         if((strcmp(auxiliar, "<Nombre>")) == 0){
             leer.getline(auxiliar, 30, '\n');
-            cine->sala[contadorSalas].nombre = new char[30];
+            
             strcpy(cine->sala[contadorSalas].nombre, auxiliar);
             cout<<auxiliar<<endl;
         }
@@ -231,7 +236,7 @@ Actor* cargarConfiguracionMultiplex(){
                 
           if((strcmp(auxiliar, "<Nombre>")) == 0){
             leer.getline(auxiliar, 30, '\n');//Nombre Pelicula
-            cine->sala[contadorSalas].pelicula[contadorPeliculas].nombre = new char[30];
+            
             strcpy(cine->sala[contadorSalas].pelicula[contadorPeliculas].nombre, auxiliar);
           }
           leer.getline(auxiliar, 30, '\n');//<Nombre/>
@@ -388,35 +393,41 @@ void printTiquet(char* nombre, char* apellido, char* nombreSala ,char* nombrePel
 }
 
 
-Silla* Crear_Sillas(int sillas_general, int sillas_preferencial) {
+Silla* crearSilla(int sillasGeneral, int sillasPreferencial) {
 
-  int sillas_totales = sillas_general + sillas_preferencial;
-  Silla* sillas = new Silla[sillas_totales];
-  Silla auxiliar;
+  short int sillasTotales = sillasGeneral + sillasPreferencial;
+  Silla* silla = new Silla[sillasTotales];
+  Silla auxiliarSilla;
 
-  for (int y = 0; y < sillas_totales; y ++) {
+  for (int i = 0; i < sillasTotales; i ++) {
 
-    if (y < sillas_general) {
+    if ((i < sillasPreferencial )&& (i < sillasTotales)) {
 
-        char* identificacion1 = new char[30];
-        strcpy(identificacion1, "Preferencial");
-        auxiliar.identificacion = identificacion1;
-        (*(sillas + y)) = auxiliar;
+        char* ptr1 = new char[13];
+        strcpy(ptr1, "Preferencial");
+        auxiliarSilla.identificacion = ptr1;
+        auxiliarSilla.estado = true;
+        auxiliarSilla.reservada = false;
+        auxiliarSilla.code = i;
+        (*(silla + i)) = auxiliarSilla;
 
     }
     else{
-        if ((y >= sillas_general) && (y < sillas_totales)) {
+        if ((i >= sillasGeneral) && (i < sillasTotales)) {
 
-            char* identificacion2 = new char[15];
-            strcpy(identificacion2, "General");
-            auxiliar.identificacion= identificacion2;
-            (*(sillas + y)) = auxiliar;
+            char* ptr2 = new char[8];
+            strcpy(ptr2, "General");
+            auxiliarSilla.identificacion= ptr2;
+            auxiliarSilla.estado = true;
+            auxiliarSilla.reservada = false;
+            auxiliarSilla.code = i;
+            (*(silla + i)) = auxiliarSilla;
 
         }
     }
   }
 
-  return sillas;
+  return silla;
 }
 
 //Adicion de Salas
