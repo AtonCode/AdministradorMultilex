@@ -14,6 +14,7 @@ Fecha de Entrega 12/04/21 6:59 AM
 #include <sstream>
 
 
+
 using namespace std;
 
 //ESTRUCTURAS
@@ -68,7 +69,7 @@ SalaCine* eliminar_Sala(int numeroSalaEliminar, SalaCine *sala);
 
 int main(){
 
-    system("clear");// Limpiar Consola
+  system("clear");// Limpiar Consola
     
     
     
@@ -545,7 +546,7 @@ void ventaTiquete(Actor* cliente){
   for(int i = 0; i < totalSillas; i++){
 
     printTiquet("Aton","Leal","Grande","BobEsponja",10, "General",i,30.000);
-    
+
   }
   cout<<"Ya se han impreso los tiquetes"<<endl;
 
