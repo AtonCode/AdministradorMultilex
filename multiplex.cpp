@@ -12,6 +12,7 @@ Fecha de Entrega 12/04/21 6:59 AM
 #include <ctime>
 #include <iomanip>
 #include <sstream>
+#include <string.h>
 
 
 using namespace std;
