@@ -6,13 +6,13 @@ Fecha de Entrega 12/04/21 6:59 AM
 **/
 
 #include <iostream>
-#include <fstream>
 #include <stdio.h>
+#include <fstream>
 #include <time.h> 
 #include <ctime>
 #include <iomanip>
 #include <sstream>
-#include <string.h>
+
 
 using namespace std;
 
@@ -46,7 +46,7 @@ struct Actor{
   char* nombre;
   char* apellido;
   SalaCine* sala;
-  int numSalas;
+  short int numSalas;
 };
 
 //Menu de Navegacion
@@ -57,7 +57,7 @@ void menuTaquilla(Actor* cine);
 
 // Requerimientos del Programa
 Actor* cargarConfiguracionMultiplex();
-void printTiquet(char* nombre, char* apellido, char* nombreSala ,char* nombrePelicula, char* hora, char* categoriaSillas,char* numeroSilla, int totalDeuda);
+void printTiquet(char* nombre, char* apellido, char* nombreSala ,char* nombrePelicula, int fecha, char* categoriaSillas,int numeroSilla, int totalDeuda);
 void ventaTiquete(Actor* cliente);
 void eliminarContenidoHTML();
 void cartelera(Actor* cine);
@@ -69,12 +69,9 @@ SalaCine* eliminar_Sala(int numeroSalaEliminar, SalaCine *sala);
 int main(){
 
     system("clear");// Limpiar Consola
-    Actor cine, *ptrCine = &cine;
-    ptrCine = new Actor; // Inicializamos en Cine
-
-    //ptrCine = cargarConfiguracionMultiplex(); //Cargamos la Config Salas Inicial
-    //cartelera(ptrCine); // Publicamos Cartelera
-    menuInicial(ptrCine); // Abrimos Menu de Navegacion
+    
+    
+    
 
   return 0;
 }
@@ -91,7 +88,7 @@ void menuTaquilla(Actor* cine){
   cout<< " "<< endl;
   cin>>opcion;
   cout<<" "<< endl;
-  if(opcion == 1){}//Adquirir Tiquets
+  if(opcion == 1){ventaTiquete(cine);menuInicial(cine);}//Adquirir Tiquets
   if(opcion == 2){menuInicial(cine);}//Volver a menu Inicial
 
   system("clear");
@@ -111,7 +108,7 @@ void menuCliente(Actor* cine){
     cin>>opcion;
     cout<<" "<< endl;
     if(opcion == 1){cartelera(cine); system("clear");menuCliente(cine);}
-    if(opcion == 2){}//Adquirir Tiquetes
+    if(opcion == 2){system("clear");ventaTiquete(cine);menuInicial(cine);}//Adquirir Tiquetes
     if(opcion == 3){system("clear");menuInicial(cine);}//Volver a menu Inicial
 
 
@@ -145,7 +142,7 @@ void menuAdministrador(Actor* cine){
     cout<< " " << endl;
 
     if(opcion == 1){}//Configuracion apartir del txt
-    if(opcion == 2){}//Consultar Salas De Cine
+    if(opcion == 2){cartelera(cine); cout<<"Ya se encuentra Publica en la Web"<<endl;}//Consultar Salas De Cine
     if(opcion == 3){}//Adicion De Sala de Cine
     if(opcion == 4){}//Adicion de Sillas a Sala de Cine
     if(opcion == 5){}//Adicion de una Pelicual
@@ -184,8 +181,7 @@ Actor* cargarConfiguracionMultiplex(){
 
     ifstream leer("multiplex2020-4.txt", ios::in);
     char* auxiliar = new char[30];
-    Actor* cine;
-    cine = new Actor[1];
+    Actor* cine = new Actor;
 
     short int contadorSalas = 1;
     short int contadorPeliculas = 1;
@@ -193,7 +189,7 @@ Actor* cargarConfiguracionMultiplex(){
 
     if(!leer.is_open()){ std::cout << "Error: File Open" << '\n';}
 
-    while(!leer.eof()){// Mientras el Archivo este A
+    while(!leer.eof()){// Mientras el Archivo este Abierto
       
       leer.getline(auxiliar, 30, '\n');//<Sala>
       cout<<auxiliar<<endl;
@@ -205,20 +201,23 @@ Actor* cargarConfiguracionMultiplex(){
 
         if((strcmp(auxiliar, "<ID>")) == 0){
                 leer.getline(auxiliar, 30, '\n');// Numero Id
-                cine[1].sala[contadorSalas].id = atoi(auxiliar);
+                cout<<auxiliar<<endl;
+                cine->sala[contadorSalas].id = atoi(auxiliar);
+                
         }
         leer.getline(auxiliar, 30, '\n');//<ID/>
         leer.getline(auxiliar, 30, '\n');//<Nombre/>
         if((strcmp(auxiliar, "<Nombre>")) == 0){
             leer.getline(auxiliar, 30, '\n');
-            cine[1].sala[contadorSalas].nombre = new char[30];
-            strcpy(cine[1].sala[contadorSalas].nombre, auxiliar);
+            cine->sala[contadorSalas].nombre = new char[30];
+            strcpy(cine->sala[contadorSalas].nombre, auxiliar);
+            cout<<auxiliar<<endl;
         }
         leer.getline(auxiliar, 30, '\n');//<Nombre/>
         leer.getline(auxiliar, 30, '\n');//<Cupo>
         if((strcmp(auxiliar, "<Cupo>")) == 0){
             leer.getline(auxiliar, 30, '\n');
-            cine[1].sala[contadorSalas].cupoTotalSillas = atoi(auxiliar);
+            cine->sala[contadorSalas].cupoTotalSillas = atoi(auxiliar);
             cout<<auxiliar<<endl;
         }
         //Peliculas Dentro de una Sala
@@ -226,17 +225,18 @@ Actor* cargarConfiguracionMultiplex(){
         leer.getline(auxiliar, 30, '\n');//<Pelicula>
         while ((strcmp(auxiliar, "<Pelicula/>")) != 0){
           leer.getline(auxiliar, 30, '\n');//<Nombre/>
+          cout<<auxiliar<<endl;
                 
           if((strcmp(auxiliar, "<Nombre>")) == 0){
             leer.getline(auxiliar, 30, '\n');//Nombre Pelicula
-            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].nombre = new char[30];
-            strcpy(cine[1].sala[contadorSalas].pelicula[contadorPeliculas].nombre, auxiliar);
+            cine->sala[contadorSalas].pelicula[contadorPeliculas].nombre = new char[30];
+            strcpy(cine->sala[contadorSalas].pelicula[contadorPeliculas].nombre, auxiliar);
           }
           leer.getline(auxiliar, 30, '\n');//<Nombre/>
           leer.getline(auxiliar, 30, '\n');//<ID>
           if((strcmp(auxiliar, "<ID>")) == 0){
             leer.getline(auxiliar, 30, '\n');//ID Pelicula
-            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].codigo= atoi(auxiliar);    
+            cine->sala[contadorSalas].pelicula[contadorPeliculas].codigo= atoi(auxiliar);    
           }
 
           leer.getline(auxiliar, 30, '\n');//<ID/>
@@ -244,11 +244,11 @@ Actor* cargarConfiguracionMultiplex(){
           if((strcmp(auxiliar, "<Fecha>")) == 0){
 
             leer.getline(auxiliar, 30, '/');//Dia Pelicula
-            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].fecha.tm_mday= atoi(auxiliar);
+            cine->sala[contadorSalas].pelicula[contadorPeliculas].fecha.tm_mday= atoi(auxiliar);
             leer.getline(auxiliar, 30, '/');//Mes Pelicula
-            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].fecha.tm_mon= atoi(auxiliar);
+            cine->sala[contadorSalas].pelicula[contadorPeliculas].fecha.tm_mon= atoi(auxiliar);
             leer.getline(auxiliar, 30, '\n');//Año Pelicula
-            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].fecha.tm_year= atoi(auxiliar);
+            cine->sala[contadorSalas].pelicula[contadorPeliculas].fecha.tm_year= atoi(auxiliar);
 
                     
           }
@@ -258,9 +258,9 @@ Actor* cargarConfiguracionMultiplex(){
           if((strcmp(auxiliar, "<Hora>")) == 0){
 
             leer.getline(auxiliar, 30, ':');//Hora Pelicula
-            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].fecha.tm_hour= atoi(auxiliar);
+            cine->sala[contadorSalas].pelicula[contadorPeliculas].fecha.tm_hour= atoi(auxiliar);
             leer.getline(auxiliar, 30, '\n');//Minuto Pelicula
-            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].fecha.tm_min= atoi(auxiliar);
+            cine->sala[contadorSalas].pelicula[contadorPeliculas].fecha.tm_min= atoi(auxiliar);
                     
           }
           leer.getline(auxiliar, 30, '\n');//<Hora/>
@@ -275,14 +275,14 @@ Actor* cargarConfiguracionMultiplex(){
                     if((strcmp(auxiliar, "<Disponibles>")) == 0){
                         leer.getline(auxiliar, 30, '\n');//Sillas preferenciales disponibles
                         
-                        cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].reservada = false;
+                        cine->sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].reservada = false;
                         
                         for(int i = 0; i <= atoi(auxiliar); i++ ){
 
-                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].code = i;
-                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].estado = true;
-                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion = new char[30];
-                            strcpy(cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion,"Preferencial" );
+                            cine->sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].code = i;
+                            cine->sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].estado = true;
+                            cine->sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion = new char[30];
+                            strcpy(cine->sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion,"Preferencial" );
                         }
                     }
 
@@ -292,10 +292,10 @@ Actor* cargarConfiguracionMultiplex(){
                         leer.getline(auxiliar, 30, '\n');//Sillas reservadas
                         for(int i = 0; i <= atoi(auxiliar); i++ ){
                             
-                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].code = i;
-                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].estado = false;
-                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion = new char[30];
-                            strcpy(cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion,"Preferencial" );
+                            cine->sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].code = i;
+                            cine->sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].estado = false;
+                            cine->sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion = new char[30];
+                            strcpy(cine->sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion,"Preferencial" );
                             
                         }
                         
@@ -311,10 +311,10 @@ Actor* cargarConfiguracionMultiplex(){
                         leer.getline(auxiliar, 30, '\n');//Sillas generales disponibles
                         for(int i = 0; i <= atoi(auxiliar); i++ ){
                             
-                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].code = i;
-                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].estado = true;
-                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion = new char[30];
-                            strcpy(cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion,"General" );
+                            cine->sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].code = i;
+                            cine->sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].estado = true;
+                            cine->sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion = new char[30];
+                            strcpy(cine->sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion,"General" );
                         }
                         
                       }
@@ -325,15 +325,15 @@ Actor* cargarConfiguracionMultiplex(){
                           leer.getline(auxiliar, 30, '\n');//Sillas generales reservada
                           for(int i = 0; i <= atoi(auxiliar); i++ ){
                             
-                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].code = i;
-                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].estado = false;
-                            cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion = new char[30];
-                            strcpy(cine[1].sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion,"General" );
+                            cine->sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].code = i;
+                            cine->sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].estado = false;
+                            cine->sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion = new char[30];
+                            strcpy(cine->sala[contadorSalas].pelicula[contadorPeliculas].silla[atoi(auxiliar)].identificacion,"General" );
                         }
                      }
                 }
            }//sillas
-        }// While 3 Fin  peliculas  
+        }// While 3 Fin  Peliculas  
       }// While Fin 2
       
       leer.getline(auxiliar, 30, '\n');
@@ -349,7 +349,7 @@ return cine;
 }
 
 //Funcion que Imprime tiquete de cada silla reservada por el cliente
-void printTiquet(string nombre, string apellido, string nombreSala ,string nombrePelicula, string hora, string categoriaSillas,string numeroSilla, string totalDeuda){
+void printTiquet(char* nombre, char* apellido, char* nombreSala ,char* nombrePelicula, int fecha, char* categoriaSillas, int numeroSilla, int totalDeuda){
 
         fstream writing;
         string linea;
@@ -372,7 +372,7 @@ void printTiquet(string nombre, string apellido, string nombreSala ,string nombr
         <<"Cliente: "<<nombre<<" "<<apellido<<endl
         <<"Nombre Sala: "<<nombreSala<<endl
         <<"Nombre Pelicula: "<< nombrePelicula <<endl
-        <<"Hora: "<<hora<<endl
+        <<"Hora: "<<fecha<<endl
         <<"Numero de Silla: "<<numeroSilla<<endl
         <<"Categoria Silla: "<<categoriaSillas<<endl
         <<"Total a Pagar: $"<<totalDeuda<<endl;
@@ -523,7 +523,7 @@ void ventaTiquete(Actor* cliente){
         cout<<" "<<endl;
         //Funcion Sillas Disponibles
         cout<<" "<<endl;
-        cout<<" Indique Codigo de Silla: "<<endl;
+        cout<<"Indique Codigo de Silla: "<<endl;
         cin>>codigoSeleccion;
         cout<<" "<<endl;
 
@@ -544,10 +544,10 @@ void ventaTiquete(Actor* cliente){
   //Por Cada silla se genera un Tiquet
   for(int i = 0; i < totalSillas; i++){
 
-    printTiquet("Nombre","Apellido","Sala","Nombre Pelicula","Horario", "TipoS Sillas","Numero Silla ","PrecioTotal");
-
+    printTiquet("Aton","Leal","Grande","BobEsponja",10, "General",i,30.000);
+    
   }
-  
+  cout<<"Ya se han impreso los tiquetes"<<endl;
 
 }
 //Esta funcion es utilizada para eliminar el contenido del HTML
@@ -642,6 +642,8 @@ void cartelera(Actor* cine){
               <<"</th>"<<endl
             <<"</tr>"<<endl;
 
+            
+
             //While utilizado para evitar que el archivo se siga escribiendo  en la linea en la que estaba y de un salto de lina
             //de esta manera de ebita un bucle infinito
             while (!writing.eof()) {
@@ -663,7 +665,7 @@ void cartelera(Actor* cine){
               //Se escribe en cartelera.html el siguiente codigo para imprimir la tabla
 
               //copiamos el nombre y lo guardamos en la variable anteriormente mencionada
-              strcpy(cine[0].sala[i].pelicula[i].nombre, nombrePelicula);
+              strcpy(cine[1].sala[i].pelicula[i].nombre, nombrePelicula);
               
               writing
 
@@ -672,7 +674,7 @@ void cartelera(Actor* cine){
               <<"<tr>"<<endl
               <<"<td>Sala "<<cine[0].sala[i].id<<"</td>"<<endl //añadir funcion de sala 
               <<"<td>"<<nombrePelicula<<"</td>"<<endl //añadir funcion de nombre
-              <<"<td>"<<cine[0].sala[i].pelicula[i].fecha.tm_hour<<":"<<cine[0].sala[i].pelicula[i].fecha.tm_min<<"</td>"<<endl; //añadir funcion de horario
+              <<"<td>"<<cine[1].sala[i].pelicula[i].fecha.tm_hour<<":"<<cine[0].sala[i].pelicula[i].fecha.tm_min<<"</td>"<<endl; //añadir funcion de horario
 
               while (!writing.eof()) {
                 getline(writing,linea);
