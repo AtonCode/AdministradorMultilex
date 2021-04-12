@@ -512,7 +512,7 @@ SalaCine* eliminar_Sala(int numeroSalaEliminar, SalaCine *sala){
 
 
 //Funcion Que permite que un usuario despues de ver la cartelera reserve Sala y sillas de la pelicula que desea ver en el horario correspondiente.
-void ventaTiquete(Actor* cliente){
+void ventaTiquete(Actor* cine){
   short int codigoSeleccion;
   short int totalSillas = 0;
 
@@ -521,8 +521,10 @@ void ventaTiquete(Actor* cliente){
 
     cout<<"Ingresa el codigo de la pelicual: "<<endl;
     cin>>codigoSeleccion;
-    //strcpy(usuario.pelicula[0].Codigo, codigoSeleccion);
-
+    // Busqueda de Pelicula en Cine
+    
+    
+    //Actualizando Sillas reservadas para la pelicula en el horario con sillas;
     cout<<" "<<endl;
     cout<<"Salas Disponibles: "<<endl;
     cout<<" "<<endl;
