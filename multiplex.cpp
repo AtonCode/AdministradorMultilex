@@ -431,7 +431,8 @@ Silla* crearSilla(int sillasGeneral, int sillasPreferencial) {
 }
 
 //Adicion de Salas
-SalaCine* crear_Sala(int i, short int id, char* nombre, int cupoTotalSillas, char* nombrePelicula, int codigo, tm fecha, int sillas_general, int sillas_preferencial){
+SalaCine* crear_Sala( Actor* cine, int i, short int id, char* nombre, int cupoTotalSillas, char* nombrePelicula, int codigo, tm fecha, int sillas_general, int sillas_preferencial){
+  
 
   fstream writing2;
   string linea;
@@ -488,8 +489,10 @@ SalaCine* crear_Sala(int i, short int id, char* nombre, int cupoTotalSillas, cha
     //Sillas Generales Reservadas
     <<"<Reservadas/>"<<endl
     <<"<General/>"<<endl
+    <<"<Sillas/>"<<endl
     <<"<Pelicula/>"<<endl
-    <<"<Sillas/>"<<endl;
+    <<"<Sala/>"<<endl;
+    
 
     while (!writing2.eof()) {
             getline(writing2,linea);
@@ -499,6 +502,7 @@ SalaCine* crear_Sala(int i, short int id, char* nombre, int cupoTotalSillas, cha
     writing2.close();
 
   }else{std::cout<<"Esta sala Existe"<<endl;}
+  
 
   return sala;
 }
