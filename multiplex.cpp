@@ -522,7 +522,7 @@ void ventaTiquete(Actor* cine){
     cout<<"Ingresa el codigo de la pelicual: "<<endl;
     cin>>codigoSeleccion;
     // Busqueda de Pelicula en Cine
-    
+
     
     //Actualizando Sillas reservadas para la pelicula en el horario con sillas;
     cout<<" "<<endl;
@@ -553,18 +553,15 @@ void ventaTiquete(Actor* cine){
   //Calculando precios
 
 
-
-
-  //Imprimiendo Tiquet
-  //Por Cada silla se genera un Tiquet
+  //Imprimiendo Tiquet Por Cada silla se genera un Tiquet
   for(int i = 0; i < totalSillas; i++){
 
     printTiquet("Aton","Leal","Grande","BobEsponja",10, "General",i,30.000);
 
   }
   cout<<"Ya se han impreso los tiquetes"<<endl;
-
 }
+
 //Esta funcion es utilizada para eliminar el contenido del HTML
 void eliminarContenidoHTML(){
   std::ofstream flujo; flujo.open("cartelera.html", std::ofstream::out | std::ofstream::trunc);
